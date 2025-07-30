@@ -317,9 +317,21 @@
         .character-avatar {
             margin: 0 auto 15px;
             display: block;
-            border: 3px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .character-avatar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
         }
 
         .character-avatar:hover {
@@ -853,14 +865,12 @@
                 '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
             ];
             
-            const shapes = ['circle', 'square', 'triangle', 'diamond', 'star'];
             const color = colors[Math.floor(Math.random() * colors.length)];
-            const shape = shapes[Math.floor(Math.random() * shapes.length)];
+            const size = Math.max(character.hp / 5, 40); // サイズを調整
             
             return {
                 color: color,
-                shape: shape,
-                size: Math.max(character.hp / 10, 20)
+                size: size
             };
         }
 
@@ -874,7 +884,7 @@
             
             display.innerHTML = `
                 <div class="character-card">
-                    <div class="character-avatar" style="background-color: ${avatar.color}; width: ${avatar.size}px; height: ${avatar.size}px; border-radius: ${avatar.shape === 'circle' ? '50%' : avatar.shape === 'square' ? '0' : '10px'};"></div>
+                    <div class="character-avatar" style="background-color: ${avatar.color}; width: ${avatar.size}px; height: ${avatar.size}px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.3);"></div>
                     <h4 class="text-white">${character.name}</h4>
                     <div class="stats-grid">
                         <div class="stat-item">
@@ -1020,11 +1030,15 @@
             const battleDisplay = document.getElementById('battleDisplay');
             const animationDiv = document.createElement('div');
             animationDiv.className = 'battle-animation';
+            
+            const attackerAvatar = generateCharacterAvatar(attacker);
+            const defenderAvatar = generateCharacterAvatar(defender);
+            
             animationDiv.innerHTML = `
                 <div class="battle-scene">
-                    <div class="attacker-avatar" style="background-color: ${generateCharacterAvatar(attacker).color};"></div>
+                    <div class="attacker-avatar" style="background-color: ${attackerAvatar.color}; width: 50px; height: 50px; border-radius: 50%; border: 2px solid white;"></div>
                     <div class="attack-effect">⚔️</div>
-                    <div class="defender-avatar" style="background-color: ${generateCharacterAvatar(defender).color};"></div>
+                    <div class="defender-avatar" style="background-color: ${defenderAvatar.color}; width: 50px; height: 50px; border-radius: 50%; border: 2px solid white;"></div>
                 </div>
                 <div class="damage-text">-${damage}</div>
             `;
