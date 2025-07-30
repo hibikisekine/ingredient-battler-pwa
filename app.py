@@ -6,6 +6,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+# 本番環境設定
+if os.environ.get('FLASK_ENV') == 'production':
+    app.config['DEBUG'] = False
+else:
+    app.config['DEBUG'] = True
+
 # データベース初期化
 def init_db():
     conn = sqlite3.connect('ingredient_battler.db')
@@ -276,4 +282,5 @@ def get_sample_characters():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, port=5001) 
+    port = int(os.environ.get('PORT', 5001))
+    app.run(host='0.0.0.0', port=port, debug=app.config['DEBUG']) 
