@@ -302,30 +302,55 @@
             <p class="text-center text-white-50 mb-4">栄養成分でキャラクターを生成してバトルしよう！</p>
         </div>
 
-        <!-- 手動入力セクション -->
+        <!-- Manual Input Section -->
         <div class="section-card fade-in-up">
             <h3 class="text-white mb-3"><i class="fas fa-edit"></i> 成分データ入力</h3>
             <div class="manual-input-section">
+                <!-- ヘルプテキスト -->
+                <div class="alert alert-info mb-3">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>使い方：</strong>食品の栄養成分表示を参考に、成分名と数値を入力してください。
+                    <br>例：タンパク質 10g、脂質 5g、炭水化物 20g
+                </div>
+                
                 <div id="ingredients-container">
                     <div class="ingredient-row">
-                        <input type="text" class="form-control ingredient-name" placeholder="成分名（例：タンパク質）" value="タンパク質">
-                        <input type="number" class="form-control ingredient-value" placeholder="数値" value="10">
-                        <select class="form-control ingredient-unit">
-                            <option value="protein">タンパク質</option>
-                            <option value="fat">脂質</option>
-                            <option value="carbs">炭水化物</option>
-                            <option value="sugar">糖質</option>
-                            <option value="salt">塩分</option>
-                        </select>
-                        <button class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">×</button>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label text-white">成分名</label>
+                                <input type="text" class="form-control ingredient-name" placeholder="例：タンパク質" value="タンパク質">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label text-white">数値</label>
+                                <input type="number" class="form-control ingredient-value" placeholder="0.0" value="10" step="0.1" min="0">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label text-white">単位</label>
+                                <select class="form-control ingredient-unit">
+                                    <option value="protein">タンパク質 (g)</option>
+                                    <option value="fat">脂質 (g)</option>
+                                    <option value="carbs">炭水化物 (g)</option>
+                                    <option value="sugar">糖質 (g)</option>
+                                    <option value="salt">塩分 (g)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label text-white">&nbsp;</label>
+                                <button class="btn btn-danger remove-ingredient w-100" onclick="removeIngredient(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button class="btn btn-game mt-3" onclick="addIngredient()">
-                    <i class="fas fa-plus"></i> 成分を追加
-                </button>
-                <button class="btn btn-game mt-3" onclick="generateCharacterFromManual()">
-                    <i class="fas fa-magic"></i> キャラクター生成
-                </button>
+                <div class="mt-4">
+                    <button class="btn btn-game me-2" onclick="addIngredient()">
+                        <i class="fas fa-plus"></i> 成分を追加
+                    </button>
+                    <button class="btn btn-game" onclick="generateCharacterFromManual()">
+                        <i class="fas fa-magic"></i> キャラクター生成
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -414,16 +439,32 @@
             const newRow = document.createElement('div');
             newRow.className = 'ingredient-row';
             newRow.innerHTML = `
-                <input type="text" class="form-control ingredient-name" placeholder="成分名（例：タンパク質）">
-                <input type="number" class="form-control ingredient-value" placeholder="数値">
-                <select class="form-control ingredient-unit">
-                    <option value="protein">タンパク質</option>
-                    <option value="fat">脂質</option>
-                    <option value="carbs">炭水化物</option>
-                    <option value="sugar">糖質</option>
-                    <option value="salt">塩分</option>
-                </select>
-                <button class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">×</button>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label text-white">成分名</label>
+                        <input type="text" class="form-control ingredient-name" placeholder="例：タンパク質">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-white">数値</label>
+                        <input type="number" class="form-control ingredient-value" placeholder="0.0" step="0.1" min="0">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-white">単位</label>
+                        <select class="form-control ingredient-unit">
+                            <option value="protein">タンパク質 (g)</option>
+                            <option value="fat">脂質 (g)</option>
+                            <option value="carbs">炭水化物 (g)</option>
+                            <option value="sugar">糖質 (g)</option>
+                            <option value="salt">塩分 (g)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label text-white">&nbsp;</label>
+                        <button class="btn btn-danger remove-ingredient w-100" onclick="removeIngredient(this)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
             `;
             container.appendChild(newRow);
         }
@@ -599,16 +640,32 @@
                 else if (ing.salt) { name = '塩分'; value = ing.salt; unit = 'salt'; }
                 
                 row.innerHTML = `
-                    <input type="text" class="form-control ingredient-name" value="${name}">
-                    <input type="number" class="form-control ingredient-value" value="${value}">
-                    <select class="form-control ingredient-unit">
-                        <option value="protein" ${unit === 'protein' ? 'selected' : ''}>タンパク質</option>
-                        <option value="fat" ${unit === 'fat' ? 'selected' : ''}>脂質</option>
-                        <option value="carbs" ${unit === 'carbs' ? 'selected' : ''}>炭水化物</option>
-                        <option value="sugar" ${unit === 'sugar' ? 'selected' : ''}>糖質</option>
-                        <option value="salt" ${unit === 'salt' ? 'selected' : ''}>塩分</option>
-                    </select>
-                    <button class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">×</button>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label text-white">成分名</label>
+                            <input type="text" class="form-control ingredient-name" value="${name}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-white">数値</label>
+                            <input type="number" class="form-control ingredient-value" value="${value}" step="0.1" min="0">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-white">単位</label>
+                            <select class="form-control ingredient-unit">
+                                <option value="protein" ${unit === 'protein' ? 'selected' : ''}>タンパク質 (g)</option>
+                                <option value="fat" ${unit === 'fat' ? 'selected' : ''}>脂質 (g)</option>
+                                <option value="carbs" ${unit === 'carbs' ? 'selected' : ''}>炭水化物 (g)</option>
+                                <option value="sugar" ${unit === 'sugar' ? 'selected' : ''}>糖質 (g)</option>
+                                <option value="salt" ${unit === 'salt' ? 'selected' : ''}>塩分 (g)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label text-white">&nbsp;</label>
+                            <button class="btn btn-danger remove-ingredient w-100" onclick="removeIngredient(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
                 `;
                 container.appendChild(row);
             });
