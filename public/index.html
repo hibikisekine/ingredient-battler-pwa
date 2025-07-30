@@ -695,129 +695,198 @@
         }
 
         function startBattle() {
-            if (!currentCharacter || !opponentCharacter) {
-                alert('キャラクターが生成されていません');
+            if (!currentCharacter) {
+                alert('まずキャラクターを生成してください！');
                 return;
             }
+
+            // フロントエンドで敵キャラクター生成
+            const enemyNames = ["栄養の敵", "成分の敵", "健康の敵", "バランスの敵", "栄養の敵"];
+            const enemyName = enemyNames[Math.floor(Math.random() * enemyNames.length)];
             
-            const playerPower = currentCharacter.attack + currentCharacter.speed;
-            const opponentPower = opponentCharacter.attack + opponentCharacter.speed;
-            
-            const playerRoll = Math.floor(Math.random() * 20) + 1;
-            const opponentRoll = Math.floor(Math.random() * 20) + 1;
-            
-            const playerTotal = playerPower + playerRoll;
-            const opponentTotal = opponentPower + opponentRoll;
-            
-            let result, expGained;
-            if (playerTotal > opponentTotal) {
-                result = 'win';
-                expGained = 10;
-            } else if (playerTotal < opponentTotal) {
-                result = 'lose';
-                expGained = 5;
-            } else {
-                result = 'draw';
-                expGained = 7;
+            const enemy = {
+                name: enemyName,
+                hp: 80 + Math.floor(Math.random() * 40),
+                attack: 40 + Math.floor(Math.random() * 30),
+                defense: 20 + Math.floor(Math.random() * 25),
+                speed: 15 + Math.floor(Math.random() * 20)
+            };
+
+            console.log('バトル開始:', { player: currentCharacter, enemy: enemy });
+
+            // バトルロジック
+            let playerHP = currentCharacter.hp;
+            let enemyHP = enemy.hp;
+            let battleLog = [];
+
+            // スピードで先攻決定
+            const playerFirst = currentCharacter.speed >= enemy.speed;
+
+            while (playerHP > 0 && enemyHP > 0) {
+                if (playerFirst) {
+                    // プレイヤー攻撃
+                    const damage = Math.max(1, currentCharacter.attack - enemy.defense);
+                    enemyHP -= damage;
+                    battleLog.push(`${currentCharacter.name}の攻撃！${enemy.name}に${damage}ダメージ！`);
+
+                    if (enemyHP <= 0) break;
+
+                    // 敵攻撃
+                    const enemyDamage = Math.max(1, enemy.attack - currentCharacter.defense);
+                    playerHP -= enemyDamage;
+                    battleLog.push(`${enemy.name}の攻撃！${currentCharacter.name}に${enemyDamage}ダメージ！`);
+                } else {
+                    // 敵攻撃
+                    const enemyDamage = Math.max(1, enemy.attack - currentCharacter.defense);
+                    playerHP -= enemyDamage;
+                    battleLog.push(`${enemy.name}の攻撃！${currentCharacter.name}に${enemyDamage}ダメージ！`);
+
+                    if (playerHP <= 0) break;
+
+                    // プレイヤー攻撃
+                    const damage = Math.max(1, currentCharacter.attack - enemy.defense);
+                    enemyHP -= damage;
+                    battleLog.push(`${currentCharacter.name}の攻撃！${enemy.name}に${damage}ダメージ！`);
+                }
             }
-            
-            displayBattleResult(result, expGained, playerTotal, opponentTotal);
+
+            const result = {
+                winner: playerHP > 0 ? currentCharacter.name : enemy.name,
+                playerHP: Math.max(0, playerHP),
+                enemyHP: Math.max(0, enemyHP),
+                battleLog: battleLog
+            };
+
+            displayBattleResult(result);
         }
 
-        function displayBattleResult(result, expGained, playerTotal, opponentTotal) {
+        function displayBattleResult(result) {
             const display = document.getElementById('battleDisplay');
-            const resultText = result === 'win' ? '勝利！' : result === 'lose' ? '敗北...' : '引き分け';
-            const resultClass = result === 'win' ? 'text-success' : result === 'lose' ? 'text-danger' : 'text-warning';
+            const resultText = result.winner === currentCharacter.name ? '勝利！' : '敗北...';
+            const resultClass = result.winner === currentCharacter.name ? 'text-success' : 'text-danger';
             
             display.innerHTML += `
                 <div class="mt-4">
                     <h4 class="${resultClass}">${resultText}</h4>
-                    <p class="text-white">獲得経験値: ${expGained}</p>
+                    <p class="text-white">${result.battleLog.join('<br>')}</p>
                     <div class="row">
                         <div class="col-md-6">
-                            <p class="text-white">${currentCharacter.name}の攻撃力: ${currentCharacter.attack + currentCharacter.speed} + ${playerTotal - (currentCharacter.attack + currentCharacter.speed)} = ${playerTotal}</p>
+                            <p class="text-white">${currentCharacter.name}のHP: ${result.playerHP}</p>
                         </div>
                         <div class="col-md-6">
-                            <p class="text-white">${opponentCharacter.name}の攻撃力: ${opponentCharacter.attack + opponentCharacter.speed} + ${opponentTotal - (opponentCharacter.attack + opponentCharacter.speed)} = ${opponentTotal}</p>
+                            <p class="text-white">${result.winner}のHP: ${result.enemyHP}</p>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        function loadCharacters() {
-            fetch('/api/characters')
-            .then(response => response.json())
-            .then(data => {
-                const charactersList = document.getElementById('characters-list');
-                charactersList.innerHTML = '';
-                
-                if (data.characters.length === 0) {
-                    loadSampleCharacters();
-                } else {
-                    data.characters.forEach(character => {
-                        const characterCard = document.createElement('div');
-                        characterCard.className = 'character-mini-card';
-                        characterCard.innerHTML = `
-                            <h5>${character.name}</h5>
-                            <p>レベル: ${character.level}</p>
-                            <p>経験値: ${character.exp}</p>
-                            <p>HP: ${character.hp}</p>
-                            <p>攻撃力: ${character.attack}</p>
-                            <p>防御力: ${character.defense}</p>
-                            <p>スピード: ${character.speed || 20}</p>
-                        `;
-                        charactersList.appendChild(characterCard);
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error loading characters:', error);
+        function displayCharacterList(characters) {
+            const charactersList = document.getElementById('characters-list');
+            charactersList.innerHTML = '';
+            
+            if (characters.length === 0) {
                 loadSampleCharacters();
-            });
+            } else {
+                characters.forEach(character => {
+                    const characterCard = document.createElement('div');
+                    characterCard.className = 'character-mini-card';
+                    characterCard.innerHTML = `
+                        <h5>${character.name}</h5>
+                        <p>HP: ${character.hp}</p>
+                        <p>攻撃力: ${character.attack}</p>
+                        <p>防御力: ${character.defense}</p>
+                        <p>スピード: ${character.speed}</p>
+                        <p>成分: ${character.ingredients.map(ing => `${ing.name}: ${ing.protein || ing.fat || ing.carbs || ing.sugar || ing.salt}`).join(', ')}</p>
+                    `;
+                    charactersList.appendChild(characterCard);
+                });
+            }
         }
 
-        function loadSampleCharacters() {
+        function loadCharacters() {
+            console.log('キャラクター読み込み開始');
+            
+            // フロントエンド完結型 - APIを使わない
             const sampleCharacters = [
                 {
-                    name: '栄養戦士',
-                    level: 5, exp: 150, hp: 180, attack: 85, defense: 70, speed: 45
+                    name: "栄養戦士",
+                    hp: 120,
+                    attack: 65,
+                    defense: 45,
+                    speed: 30,
+                    ingredients: [{"name": "タンパク質", "protein": 10}]
                 },
                 {
-                    name: '成分騎士',
-                    level: 3, exp: 80, hp: 140, attack: 65, defense: 55, speed: 35
+                    name: "成分騎士", 
+                    hp: 100,
+                    attack: 80,
+                    defense: 35,
+                    speed: 40,
+                    ingredients: [{"name": "脂質", "fat": 15}]
                 },
                 {
-                    name: '健康勇者',
-                    level: 7, exp: 220, hp: 200, attack: 95, defense: 80, speed: 50
-                },
-                {
-                    name: 'バランス戦士',
-                    level: 4, exp: 100, hp: 160, attack: 75, defense: 65, speed: 40
-                },
-                {
-                    name: '栄養の守護者',
-                    level: 6, exp: 180, hp: 190, attack: 90, defense: 75, speed: 48
+                    name: "健康勇者",
+                    hp: 150,
+                    attack: 50,
+                    defense: 60,
+                    speed: 25,
+                    ingredients: [{"name": "炭水化物", "carbs": 20}]
                 }
             ];
             
-            const charactersList = document.getElementById('characters-list');
-            charactersList.innerHTML = '<div class="col-12 mb-3"><p class="text-center text-muted">サンプルキャラクター</p></div>';
+            displayCharacterList(sampleCharacters);
+            console.log('サンプルキャラクター読み込み完了');
+        }
+
+        function loadSampleCharacters() {
+            console.log('サンプルキャラクター読み込み開始');
             
-            sampleCharacters.forEach(character => {
-                const characterCard = document.createElement('div');
-                characterCard.className = 'character-mini-card';
-                characterCard.innerHTML = `
-                    <h5>${character.name}</h5>
-                    <p>レベル: ${character.level}</p>
-                    <p>経験値: ${character.exp}</p>
-                    <p>HP: ${character.hp}</p>
-                    <p>攻撃力: ${character.attack}</p>
-                    <p>防御力: ${character.defense}</p>
-                    <p>スピード: ${character.speed}</p>
-                `;
-                charactersList.appendChild(characterCard);
-            });
+            const sampleCharacters = [
+                {
+                    name: "栄養戦士",
+                    hp: 120,
+                    attack: 65,
+                    defense: 45,
+                    speed: 30,
+                    ingredients: [{"name": "タンパク質", "protein": 10}]
+                },
+                {
+                    name: "成分騎士", 
+                    hp: 100,
+                    attack: 80,
+                    defense: 35,
+                    speed: 40,
+                    ingredients: [{"name": "脂質", "fat": 15}]
+                },
+                {
+                    name: "健康勇者",
+                    hp: 150,
+                    attack: 50,
+                    defense: 60,
+                    speed: 25,
+                    ingredients: [{"name": "炭水化物", "carbs": 20}]
+                },
+                {
+                    name: "バランス戦士",
+                    hp: 110,
+                    attack: 70,
+                    defense: 50,
+                    speed: 35,
+                    ingredients: [{"name": "糖質", "sugar": 8}]
+                },
+                {
+                    name: "栄養の守護者",
+                    hp: 130,
+                    attack: 60,
+                    defense: 55,
+                    speed: 30,
+                    ingredients: [{"name": "塩分", "salt": 2}]
+                }
+            ];
+            
+            displayCharacterList(sampleCharacters);
+            console.log('サンプルキャラクター読み込み完了');
         }
 
         // PWA Install
