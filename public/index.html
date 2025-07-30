@@ -224,6 +224,9 @@
         .camera-container {
             text-align: center;
             margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
         }
 
         #video {
@@ -232,10 +235,11 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: #000;
         }
 
         .camera-buttons {
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         .camera-buttons button {
@@ -246,6 +250,7 @@
             display: none;
             margin: 10px 0;
             color: white;
+            font-size: 1.1em;
         }
 
         .loading-spinner {
@@ -556,7 +561,7 @@
         <div class="section-card fade-in-up">
             <h3 class="text-white mb-3"><i class="fas fa-camera"></i> カメラで成分読み取り</h3>
             <div class="camera-container">
-                <video id="video" autoplay playsinline muted style="display: none; border-radius: 10px;"></video>
+                <video id="video" autoplay playsinline muted style="display: none; width: 100%; max-width: 400px; height: auto; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.3);"></video>
                 <canvas id="canvas" style="display: none;"></canvas>
                 <div class="camera-buttons">
                     <button class="btn btn-game" onclick="startCamera()">
@@ -754,6 +759,12 @@
         async function startCamera() {
             try {
                 console.log('カメラ起動開始');
+                
+                // カメラデバイスの確認
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                console.log('利用可能なカメラ:', videoDevices);
+                
                 stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { 
                         width: { ideal: 1280 },
@@ -762,17 +773,39 @@
                     } 
                 });
                 
+                console.log('カメラストリーム取得成功:', stream);
+                
                 const video = document.getElementById('video');
+                console.log('Video要素:', video);
+                
                 video.srcObject = stream;
                 video.style.display = 'block';
                 video.style.width = '100%';
                 video.style.maxWidth = '400px';
+                video.style.height = 'auto';
                 video.style.borderRadius = '10px';
+                video.style.border = '2px solid rgba(255, 255, 255, 0.3)';
+                video.style.background = '#000';
+                
+                console.log('Videoスタイル設定完了');
                 
                 // ビデオが読み込まれたら再生開始
                 video.onloadedmetadata = function() {
-                    video.play();
-                    console.log('カメラ起動完了');
+                    console.log('ビデオメタデータ読み込み完了');
+                    console.log('ビデオサイズ:', video.videoWidth, 'x', video.videoHeight);
+                    video.play().then(() => {
+                        console.log('カメラ起動完了 - 再生開始');
+                    }).catch(error => {
+                        console.error('ビデオ再生エラー:', error);
+                    });
+                };
+                
+                video.onerror = function(error) {
+                    console.error('ビデオエラー:', error);
+                };
+                
+                video.oncanplay = function() {
+                    console.log('ビデオ再生可能');
                 };
                 
                 document.querySelector('button[onclick="startCamera()"]').style.display = 'none';
@@ -781,7 +814,7 @@
                 
             } catch (error) {
                 console.error('カメラアクセスエラー:', error);
-                alert('カメラにアクセスできませんでした。ブラウザの設定を確認してください。');
+                alert('カメラにアクセスできませんでした。ブラウザの設定を確認してください。\nエラー: ' + error.message);
             }
         }
 
