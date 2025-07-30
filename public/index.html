@@ -701,10 +701,14 @@
 
             console.log('生成されたキャラクター:', character);
 
-            displayCharacter(character);
-            
-            // 成功メッセージ
-            alert('キャラクター生成成功！');
+            try {
+                displayCharacter(character);
+                console.log('キャラクター表示完了');
+                alert('キャラクター生成成功！');
+            } catch (error) {
+                console.error('キャラクター表示エラー:', error);
+                alert('キャラクター表示でエラーが発生しました: ' + error.message);
+            }
         }
 
         // カメラ機能
@@ -866,6 +870,8 @@
             currentCharacter = character;
             
             const display = document.getElementById('characterDisplay');
+            const section = document.getElementById('characterSection');
+            
             display.innerHTML = `
                 <div class="character-card">
                     <div class="character-avatar" style="background-color: ${avatar.color}; width: ${avatar.size}px; height: ${avatar.size}px; border-radius: ${avatar.shape === 'circle' ? '50%' : avatar.shape === 'square' ? '0' : '10px'};"></div>
@@ -897,8 +903,9 @@
                 </div>
             `;
             
-            section.style.display = 'block';
-            generateOpponent();
+            if (section) {
+                section.style.display = 'block';
+            }
         }
 
         function generateOpponent() {
