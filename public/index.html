@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成分表示バトラー</title>
+    <title>成分表示バトラー - 栄養成分でキャラクターを生成してバトル！栄養知識も学べる</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="description" content="栄養成分でキャラクターを生成してバトルしよう！">
+    <meta name="description" content="栄養成分でキャラクターを生成してバトル！栄養素の知識、健康効果、バランスの良い食事について学べる教育サイト。成分表示から栄養価を理解し、楽しく栄養知識を身につけよう。">
+    <meta name="keywords" content="栄養成分,栄養素,健康,食事,バランス,成分表示,栄養知識,教育,ゲーム,バトル">
+    <meta name="author" content="成分表示バトラー">
     <meta name="theme-color" content="#6c5ce7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -492,17 +494,126 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 5px;
         }
+
+        .nutrition-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nutrition-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .nutrition-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .nutrition-card h5 {
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .nutrition-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .nutrition-card ul {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            line-height: 1.6;
+            padding-left: 20px;
+        }
+
+        .nutrition-card li {
+            margin-bottom: 5px;
+        }
+
+        .nutrition-content {
+            text-align: left;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-item i {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-item h5 {
+            color: white;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
     <div class="particles" id="particles"></div>
     
     <div class="game-container">
-        <div class="section-card fade-in-up">
-            <h1 class="text-center mb-4" style="font-family: 'Orbitron', sans-serif; color: white;">
-                <i class="fas fa-utensils"></i> 成分表示バトラー
+        <!-- ヘッダー -->
+        <div class="section-card text-center">
+            <h1 class="display-4 text-white mb-3">
+                <i class="fas fa-dragon"></i> 成分表示バトラー
             </h1>
-            <p class="text-center text-white-50 mb-4">栄養成分でキャラクターを生成してバトルしよう！</p>
+            <p class="lead text-white mb-4">
+                栄養成分でキャラクターを生成してバトル！<br>
+                <span class="text-warning">栄養知識も楽しく学べる教育サイト</span>
+            </p>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="feature-item">
+                        <i class="fas fa-camera text-success"></i>
+                        <h5>カメラで成分読み取り</h5>
+                        <p>食品の成分表示を撮影して自動解析</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-item">
+                        <i class="fas fa-gamepad text-warning"></i>
+                        <h5>栄養成分でキャラ生成</h5>
+                        <p>成分からユニークなキャラクターを作成</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-item">
+                        <i class="fas fa-graduation-cap text-info"></i>
+                        <h5>栄養知識を学習</h5>
+                        <p>楽しく栄養素の知識を身につけよう</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Manual Input Section -->
@@ -603,6 +714,76 @@
             <div id="characters-list" class="characters-grid"></div>
         </div>
 
+        <!-- 栄養知識セクション -->
+        <div class="section-card">
+            <h2 class="text-center text-white mb-4">
+                <i class="fas fa-book-medical"></i> 栄養知識を学ぼう
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="nutrition-card">
+                        <h4 class="text-white"><i class="fas fa-leaf"></i> 主要栄養素</h4>
+                        <div class="nutrition-content">
+                            <h5>タンパク質</h5>
+                            <p>筋肉や臓器の材料。肉、魚、卵、豆類に豊富。</p>
+                            
+                            <h5>炭水化物</h5>
+                            <p>体の主要エネルギー源。ご飯、パン、麺類に含まれる。</p>
+                            
+                            <h5>脂質</h5>
+                            <p>細胞膜の材料。適量摂取が重要。</p>
+                            
+                            <h5>ビタミン・ミネラル</h5>
+                            <p>体の調子を整える微量栄養素。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="nutrition-card">
+                        <h4 class="text-white"><i class="fas fa-balance-scale"></i> バランスの良い食事</h4>
+                        <div class="nutrition-content">
+                            <h5>主食（炭水化物）</h5>
+                            <p>1日のエネルギーの50-65%を占める。</p>
+                            
+                            <h5>主菜（タンパク質）</h5>
+                            <p>筋肉や血液の材料。毎食摂取が重要。</p>
+                            
+                            <h5>副菜（ビタミン・ミネラル）</h5>
+                            <p>野菜や海藻でビタミン・ミネラルを補給。</p>
+                            
+                            <h5>果物・乳製品</h5>
+                            <p>カルシウムやビタミンCを補給。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="nutrition-card">
+                        <h4 class="text-white"><i class="fas fa-chart-line"></i> 成分表示の見方</h4>
+                        <div class="nutrition-content">
+                            <h5>栄養成分表示とは</h5>
+                            <p>食品に含まれる栄養成分の量を表示したもの。エネルギー、タンパク質、脂質、炭水化物、ナトリウムなどが記載されています。</p>
+                            
+                            <h5>1食あたりの目安</h5>
+                            <ul>
+                                <li>エネルギー: 600-800kcal</li>
+                                <li>タンパク質: 20-30g</li>
+                                <li>脂質: 20-25g</li>
+                                <li>炭水化物: 80-100g</li>
+                            </ul>
+                            
+                            <h5>栄養バランスのポイント</h5>
+                            <p>単一の栄養素に偏らず、様々な栄養素をバランスよく摂取することが健康維持の秘訣です。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- AdSense広告 -->
         <div class="ad-banner mt-4">
             <ins class="adsbygoogle"
@@ -614,6 +795,31 @@
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
+        </div>
+
+        <!-- フッター -->
+        <div class="section-card text-center">
+            <h3 class="text-white mb-4">
+                <i class="fas fa-heart"></i> 健康的な生活をサポート
+            </h3>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-warning">栄養教育</h5>
+                    <p class="text-white-50">楽しく栄養知識を学んで、健康的な食生活を実現しましょう。</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-success">成分理解</h5>
+                    <p class="text-white-50">食品の成分表示を理解して、より良い食品選択を。</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-info">バランス重視</h5>
+                    <p class="text-white-50">栄養バランスの重要性をゲームで楽しく学ぼう。</p>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+            <p class="text-white-50 mb-0">
+                <small>© 2024 成分表示バトラー - 栄養教育サイト</small>
+            </p>
         </div>
     </div>
 
