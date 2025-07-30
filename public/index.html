@@ -436,13 +436,19 @@
         }
 
         function generateCharacterFromManual() {
+            console.log('キャラクター生成開始');
+            
             const ingredients = [];
             const rows = document.querySelectorAll('.ingredient-row');
             
-            rows.forEach(row => {
+            console.log('成分行数:', rows.length);
+            
+            rows.forEach((row, index) => {
                 const name = row.querySelector('.ingredient-name').value;
                 const value = parseFloat(row.querySelector('.ingredient-value').value) || 0;
                 const unit = row.querySelector('.ingredient-unit').value;
+                
+                console.log(`行${index + 1}:`, { name, value, unit });
                 
                 if (name && value > 0) {
                     ingredients.push({
@@ -452,19 +458,25 @@
                 }
             });
 
+            console.log('抽出された成分:', ingredients);
+
             if (ingredients.length === 0) {
                 alert('成分データを入力してください');
                 return;
             }
 
-            // サンプルキャラクター生成（APIが使えない場合）
-            const names = ["栄養戦士", "成分騎士", "健康勇者", "バランス戦士", "栄養の守護者"];
+            // フロントエンドでキャラクター生成
+            const names = ["栄養戦士", "成分騎士", "健康勇者", "バランス戦士", "栄養の守護者", 
+                          "タンパク質戦士", "脂質騎士", "炭水化物勇者", "糖質戦士", "塩分の守護者"];
             const name = names[Math.floor(Math.random() * names.length)];
             
             const totalProtein = ingredients.reduce((sum, ing) => sum + (ing.protein || 0), 0);
             const totalFat = ingredients.reduce((sum, ing) => sum + (ing.fat || 0), 0);
             const totalCarbs = ingredients.reduce((sum, ing) => sum + (ing.carbs || 0), 0);
             const totalSugar = ingredients.reduce((sum, ing) => sum + (ing.sugar || 0), 0);
+            const totalSalt = ingredients.reduce((sum, ing) => sum + (ing.salt || 0), 0);
+            
+            console.log('計算結果:', { totalProtein, totalFat, totalCarbs, totalSugar, totalSalt });
             
             const character = {
                 name: name,
@@ -475,7 +487,12 @@
                 ingredients: ingredients
             };
 
+            console.log('生成されたキャラクター:', character);
+
             displayCharacter(character);
+            
+            // 成功メッセージ
+            alert('キャラクター生成成功！');
         }
 
         // カメラ機能
