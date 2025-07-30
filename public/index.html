@@ -313,6 +313,140 @@
                 padding: 5px;
             }
         }
+
+        .character-avatar {
+            margin: 0 auto 15px;
+            display: block;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .character-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2px;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .ingredients-list {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .ingredients-list ul {
+            margin: 5px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .ingredients-list li {
+            font-size: 0.9em;
+            margin-bottom: 2px;
+        }
+
+        .battle-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            animation: battleFadeIn 0.5s ease-in-out;
+        }
+
+        .battle-scene {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .attacker-avatar, .defender-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .attack-effect {
+            font-size: 2em;
+            animation: attackMove 1s ease-in-out;
+        }
+
+        .damage-text {
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 1.5em;
+            font-weight: bold;
+            animation: damagePop 0.5s ease-in-out;
+        }
+
+        @keyframes battleFadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes attackMove {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes damagePop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .battle-result {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .battle-log {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+
+        .battle-log p {
+            margin: 5px 0;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -708,41 +842,57 @@
             });
         }
 
-        function displayCharacter(character) {
-            currentCharacter = character;
-            const section = document.getElementById('characterSection');
-            const display = document.getElementById('characterDisplay');
+        // キャラクターアバター生成
+        function generateCharacterAvatar(character) {
+            const colors = [
+                '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+                '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+            ];
             
+            const shapes = ['circle', 'square', 'triangle', 'diamond', 'star'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const shape = shapes[Math.floor(Math.random() * shapes.length)];
+            
+            return {
+                color: color,
+                shape: shape,
+                size: Math.max(character.hp / 10, 20)
+            };
+        }
+
+        // キャラクター表示を改善
+        function displayCharacter(character) {
+            const avatar = generateCharacterAvatar(character);
+            currentCharacter = character;
+            
+            const display = document.getElementById('characterDisplay');
             display.innerHTML = `
                 <div class="character-card">
+                    <div class="character-avatar" style="background-color: ${avatar.color}; width: ${avatar.size}px; height: ${avatar.size}px; border-radius: ${avatar.shape === 'circle' ? '50%' : avatar.shape === 'square' ? '0' : '10px'};"></div>
                     <h4 class="text-white">${character.name}</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="text-white-50">HP: ${character.hp}</p>
-                            <div class="stats-bar">
-                                <div class="stats-fill" style="width: ${Math.min(character.hp / 2, 100)}%"></div>
-                            </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">HP</span>
+                            <span class="stat-value">${character.hp}</span>
                         </div>
-                        <div class="col-md-6">
-                            <p class="text-white-50">攻撃力: ${character.attack}</p>
-                            <div class="stats-bar">
-                                <div class="stats-fill" style="width: ${Math.min(character.attack, 100)}%"></div>
-                            </div>
+                        <div class="stat-item">
+                            <span class="stat-label">攻撃力</span>
+                            <span class="stat-value">${character.attack}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">防御力</span>
+                            <span class="stat-value">${character.defense}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">スピード</span>
+                            <span class="stat-value">${character.speed}</span>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="text-white-50">防御力: ${character.defense}</p>
-                            <div class="stats-bar">
-                                <div class="stats-fill" style="width: ${Math.min(character.defense, 100)}%"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="text-white-50">スピード: ${character.speed}</p>
-                            <div class="stats-bar">
-                                <div class="stats-fill" style="width: ${Math.min(character.speed, 100)}%"></div>
-                            </div>
-                        </div>
+                    <div class="ingredients-list">
+                        <h6 class="text-white">成分:</h6>
+                        <ul class="text-white">
+                            ${character.ingredients.map(ing => `<li>${ing.name}: ${ing.protein || ing.fat || ing.carbs || ing.sugar || ing.salt}g</li>`).join('')}
+                        </ul>
                     </div>
                 </div>
             `;
@@ -822,6 +972,7 @@
                     const damage = Math.max(1, currentCharacter.attack - enemy.defense);
                     enemyHP -= damage;
                     battleLog.push(`${currentCharacter.name}の攻撃！${enemy.name}に${damage}ダメージ！`);
+                    animateBattle(currentCharacter, enemy, damage); // バトルアニメーション
 
                     if (enemyHP <= 0) break;
 
@@ -829,11 +980,13 @@
                     const enemyDamage = Math.max(1, enemy.attack - currentCharacter.defense);
                     playerHP -= enemyDamage;
                     battleLog.push(`${enemy.name}の攻撃！${currentCharacter.name}に${enemyDamage}ダメージ！`);
+                    animateBattle(enemy, currentCharacter, enemyDamage); // バトルアニメーション
                 } else {
                     // 敵攻撃
                     const enemyDamage = Math.max(1, enemy.attack - currentCharacter.defense);
                     playerHP -= enemyDamage;
                     battleLog.push(`${enemy.name}の攻撃！${currentCharacter.name}に${enemyDamage}ダメージ！`);
+                    animateBattle(enemy, currentCharacter, enemyDamage); // バトルアニメーション
 
                     if (playerHP <= 0) break;
 
@@ -841,6 +994,7 @@
                     const damage = Math.max(1, currentCharacter.attack - enemy.defense);
                     enemyHP -= damage;
                     battleLog.push(`${currentCharacter.name}の攻撃！${enemy.name}に${damage}ダメージ！`);
+                    animateBattle(currentCharacter, enemy, damage); // バトルアニメーション
                 }
             }
 
@@ -854,21 +1008,46 @@
             displayBattleResult(result);
         }
 
+        // バトルアニメーション
+        function animateBattle(attacker, defender, damage) {
+            const battleDisplay = document.getElementById('battleDisplay');
+            const animationDiv = document.createElement('div');
+            animationDiv.className = 'battle-animation';
+            animationDiv.innerHTML = `
+                <div class="battle-scene">
+                    <div class="attacker-avatar" style="background-color: ${generateCharacterAvatar(attacker).color};"></div>
+                    <div class="attack-effect">⚔️</div>
+                    <div class="defender-avatar" style="background-color: ${generateCharacterAvatar(defender).color};"></div>
+                </div>
+                <div class="damage-text">-${damage}</div>
+            `;
+            battleDisplay.appendChild(animationDiv);
+            
+            setTimeout(() => {
+                animationDiv.remove();
+            }, 2000);
+        }
+
+        // バトル結果表示を改善
         function displayBattleResult(result) {
             const display = document.getElementById('battleDisplay');
             const resultText = result.winner === currentCharacter.name ? '勝利！' : '敗北...';
             const resultClass = result.winner === currentCharacter.name ? 'text-success' : 'text-danger';
             
             display.innerHTML += `
-                <div class="mt-4">
+                <div class="battle-result mt-4">
                     <h4 class="${resultClass}">${resultText}</h4>
-                    <p class="text-white">${result.battleLog.join('<br>')}</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="text-white">${currentCharacter.name}のHP: ${result.playerHP}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="text-white">${result.winner}のHP: ${result.enemyHP}</p>
+                    <div class="battle-log">
+                        ${result.battleLog.map(log => `<p class="text-white">${log}</p>`).join('')}
+                    </div>
+                    <div class="battle-stats">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-white">${currentCharacter.name}のHP: ${result.playerHP}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-white">${result.winner}のHP: ${result.enemyHP}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
