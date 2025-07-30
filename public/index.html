@@ -13,19 +13,19 @@
     <meta name="apple-mobile-web-app-title" content="成分バトラー">
     
     <!-- PWA Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
-    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
-    
-    <!-- PWA Manifest -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" href="/static/icons/icon-152x152.png">
     <link rel="manifest" href="/manifest.json">
     
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
-        
         :root {
             --primary-color: #6c5ce7;
             --secondary-color: #a29bfe;
@@ -38,225 +38,111 @@
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --gradient-danger: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+
         body {
+            font-family: 'Exo 2', sans-serif;
             background: var(--gradient-primary);
             min-height: 100vh;
-            font-family: 'Exo 2', sans-serif;
-            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        
+
         .game-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.1),
-                0 0 0 1px rgba(255, 255, 255, 0.2);
-            margin: 20px auto;
-            max-width: 1400px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
             position: relative;
-            overflow: hidden;
+            z-index: 2;
         }
-        
-        .game-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--gradient-secondary);
-            border-radius: 25px 25px 0 0;
-        }
-        
-        .game-header {
-            text-align: center;
-            padding: 30px 0;
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1) 0%, rgba(162, 155, 254, 0.1) 100%);
-            border-radius: 25px 25px 0 0;
-            position: relative;
-        }
-        
-        .game-title {
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-            font-size: 3rem;
-            background: var(--gradient-secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(253, 121, 168, 0.5);
-            margin-bottom: 10px;
-        }
-        
-        .game-subtitle {
-            font-size: 1.2rem;
-            color: var(--dark-color);
-            opacity: 0.8;
-            font-weight: 300;
-        }
-        
+
         .section-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.1),
-                0 0 0 1px rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-        
-        .section-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-success);
-            border-radius: 20px 20px 0 0;
-        }
-        
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.15),
-                0 0 0 1px rgba(255, 255, 255, 0.8);
-        }
-        
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section-title i {
-            background: var(--gradient-secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
+
         .character-card {
-            background: var(--gradient-secondary);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
             padding: 25px;
             margin: 15px 0;
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.1),
-                0 0 0 1px rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
-        
-        .character-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            transform: rotate(45deg);
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-        
-        .character-card:hover::before {
-            opacity: 1;
-            transform: rotate(45deg) scale(1.2);
-        }
-        
+
         .character-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
-        
-        .character-name {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+        .battle-arena {
+            background: var(--gradient-secondary);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
         }
-        
-        .stats-container {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .stat-item {
-            margin-bottom: 15px;
-        }
-        
-        .stat-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
+
+        .btn-game {
+            background: var(--gradient-success);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
             font-weight: 600;
             color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        
-        .stats-bar {
-            background: rgba(255, 255, 255, 0.3);
+
+        .btn-game:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
-            height: 12px;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(253, 121, 168, 0.25);
+            color: white;
+        }
+
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            margin: 5px 0;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .stats-fill {
             height: 100%;
             border-radius: 10px;
+            background: var(--gradient-success);
             transition: width 0.5s ease;
             position: relative;
-            overflow: hidden;
         }
-        
+
         .stats-fill::after {
             content: '';
             position: absolute;
@@ -264,282 +150,19 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             animation: shimmer 2s infinite;
         }
-        
+
         @keyframes shimmer {
             0% { left: -100%; }
             100% { left: 100%; }
         }
-        
-        .hp-fill { background: var(--gradient-danger); }
-        .attack-fill { background: var(--gradient-warning); }
-        .defense-fill { background: var(--gradient-success); }
-        .speed-fill { background: var(--gradient-secondary); }
-        
-        .battle-arena {
-            background: var(--gradient-primary);
-            border-radius: 25px;
-            padding: 30px;
-            color: white;
-            margin: 25px 0;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
         }
-        
-        .battle-arena::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        
-        .battle-title {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn-battle {
-            background: var(--gradient-danger);
-            border: none;
-            border-radius: 50px;
-            padding: 15px 40px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-battle::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .btn-battle:hover::before {
-            left: 100%;
-        }
-        
-        .btn-battle:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn-camera {
-            background: var(--gradient-success);
-            border: none;
-            border-radius: 25px;
-            padding: 12px 25px;
-            margin: 8px;
-            color: white;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-camera:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn-primary {
-            background: var(--gradient-secondary);
-            border: none;
-            border-radius: 25px;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .camera-container {
-            position: relative;
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-        
-        #video {
-            width: 100%;
-            border-radius: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        #canvas {
-            display: none;
-        }
-        
-        .camera-controls {
-            margin-top: 15px;
-            text-align: center;
-        }
-        
-        .ocr-result {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 15px 0;
-            max-height: 250px;
-            overflow-y: auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .ingredient-input {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 15px 0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .form-control {
-            border-radius: 15px;
-            border: 2px solid rgba(108, 92, 231, 0.2);
-            padding: 12px 15px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        .form-label {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 8px;
-        }
-        
-        .battle-log {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            padding: 20px;
-            max-height: 250px;
-            overflow-y: auto;
-            font-family: 'Courier New', monospace;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
-        }
-        
-        .spinner {
-            border: 4px solid rgba(108, 92, 231, 0.2);
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loading p {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .characters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .character-mini-card {
-            background: var(--gradient-secondary);
-            border-radius: 15px;
-            padding: 20px;
-            color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .character-mini-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-        
-        .character-mini-card h5 {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .character-mini-card p {
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        /* レスポンシブデザイン */
-        @media (max-width: 768px) {
-            .game-title {
-                font-size: 2rem;
-            }
-            
-            .section-card {
-                padding: 20px;
-                margin: 15px 0;
-            }
-            
-            .character-card {
-                padding: 20px;
-            }
-            
-            .battle-arena {
-                padding: 20px;
-            }
-            
-            .btn-battle {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-        }
-        
-        /* アニメーション */
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -550,539 +173,559 @@
                 transform: translateY(0);
             }
         }
-        
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        /* パーティクル効果 */
+
         .particles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 1;
             pointer-events: none;
-            z-index: -1;
         }
-        
+
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            animation: float 6s infinite linear;
+            animation: float 6s ease-in-out infinite;
         }
-        
+
         @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
-        
-        /* PWA インストールボタン */
-        .install-button {
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .character-mini-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .character-mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .camera-container {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .camera-controls {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .manual-input-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ingredient-input {
+            margin: 10px 0;
+        }
+
+        .ingredient-row {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            align-items: center;
+        }
+
+        .ingredient-row input {
+            flex: 1;
+        }
+
+        .remove-ingredient {
+            background: var(--danger-color);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
+            font-weight: bold;
+        }
+
+        #installButton {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: var(--gradient-success);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px;
-            font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             display: none;
-            transition: all 0.3s ease;
-        }
-        
-        .install-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
-    <!-- パーティクル効果 -->
     <div class="particles" id="particles"></div>
     
-    <!-- PWA インストールボタン -->
-    <button id="installButton" class="install-button">
-        <i class="fas fa-download"></i> アプリをインストール
-    </button>
-    
-    <div class="container-fluid">
-        <div class="game-container">
-            <div class="game-header">
-                <h1 class="game-title">
-                    <i class="fas fa-dragon"></i> 成分表示バトラー
-                </h1>
-                <p class="game-subtitle">栄養成分でキャラクターを生成してバトルしよう！</p>
+    <div class="game-container">
+        <div class="section-card fade-in-up">
+            <h1 class="text-center mb-4" style="font-family: 'Orbitron', sans-serif; color: white;">
+                <i class="fas fa-utensils"></i> 成分表示バトラー
+            </h1>
+            <p class="text-center text-white-50 mb-4">栄養成分でキャラクターを生成してバトルしよう！</p>
+        </div>
+
+        <!-- 手動入力セクション -->
+        <div class="section-card fade-in-up">
+            <h3 class="text-white mb-3"><i class="fas fa-edit"></i> 成分データ入力</h3>
+            <div class="manual-input-section">
+                <div id="ingredients-container">
+                    <div class="ingredient-row">
+                        <input type="text" class="form-control ingredient-name" placeholder="成分名（例：タンパク質）" value="タンパク質">
+                        <input type="number" class="form-control ingredient-value" placeholder="数値" value="10">
+                        <select class="form-control ingredient-unit">
+                            <option value="protein">タンパク質</option>
+                            <option value="fat">脂質</option>
+                            <option value="carbs">炭水化物</option>
+                            <option value="sugar">糖質</option>
+                            <option value="salt">塩分</option>
+                        </select>
+                        <button class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">×</button>
+                    </div>
+                </div>
+                <button class="btn btn-game mt-3" onclick="addIngredient()">
+                    <i class="fas fa-plus"></i> 成分を追加
+                </button>
+                <button class="btn btn-game mt-3" onclick="generateCharacterFromManual()">
+                    <i class="fas fa-magic"></i> キャラクター生成
+                </button>
             </div>
-            
-            <!-- カメラ/成分入力セクション -->
-            <div class="section-card fade-in-up">
-                <h3 class="section-title">
-                    <i class="fas fa-camera"></i> 成分読み取り
-                </h3>
-                
-                <!-- カメラ機能 -->
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <h5 class="section-title" style="font-size: 1.2rem;">
-                            <i class="fas fa-camera"></i> カメラで成分表示を撮影
-                        </h5>
-                        <div class="camera-container">
-                            <video id="video" autoplay playsinline></video>
-                            <canvas id="canvas"></canvas>
-                            <div class="camera-controls">
-                                <button class="btn btn-camera" onclick="startCamera()">
-                                    <i class="fas fa-camera"></i> カメラ開始
-                                </button>
-                                <button class="btn btn-camera" onclick="captureImage()">
-                                    <i class="fas fa-camera-retro"></i> 撮影
-                                </button>
-                                <button class="btn btn-camera" onclick="stopCamera()">
-                                    <i class="fas fa-stop"></i> 停止
-                                </button>
-                            </div>
-                        </div>
-                        <div class="loading" id="loading">
-                            <div class="spinner"></div>
-                            <p>成分データを解析中...</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="ocr-result" id="ocr-result">
-                            <h6 class="section-title" style="font-size: 1rem; margin-bottom: 15px;">
-                                <i class="fas fa-search"></i> OCR解析結果
-                            </h6>
-                            <div id="ocr-text"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 手動入力 -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="ingredient-input">
-                            <h5 class="section-title" style="font-size: 1.2rem; margin-bottom: 20px;">
-                                <i class="fas fa-keyboard"></i> 成分データ入力（手動）
-                            </h5>
-                            <div class="mb-3">
-                                <label class="form-label">タンパク質 (g)</label>
-                                <input type="number" class="form-control" id="protein" value="10">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">脂質 (g)</label>
-                                <input type="number" class="form-control" id="fat" value="5">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">炭水化物 (g)</label>
-                                <input type="number" class="form-control" id="carbs" value="20">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">糖質 (g)</label>
-                                <input type="number" class="form-control" id="sugar" value="15">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">食塩相当量 (g)</label>
-                                <input type="number" class="form-control" id="salt" value="0.5">
-                            </div>
-                            <button class="btn btn-primary" onclick="generateCharacter()">
-                                <i class="fas fa-magic"></i> キャラクター生成
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="character-display"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- バトルアリーナ -->
-            <div class="battle-arena fade-in-up" id="battle-arena" style="display: none;">
-                <h3 class="battle-title">
-                    <i class="fas fa-sword"></i> バトルアリーナ
-                </h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div id="player-character"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="opponent-character"></div>
-                    </div>
-                </div>
-                <div class="text-center mt-4">
-                    <button class="btn btn-battle btn-lg" onclick="startBattle()">
-                        <i class="fas fa-fist-raised"></i> バトル開始！
+        </div>
+
+        <!-- カメラOCRセクション -->
+        <div class="section-card fade-in-up">
+            <h3 class="text-white mb-3"><i class="fas fa-camera"></i> カメラで成分読み取り</h3>
+            <div class="camera-container">
+                <video id="video" width="100%" height="300" style="display: none; border-radius: 10px;"></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <div class="camera-controls">
+                    <button class="btn btn-game" onclick="startCamera()">
+                        <i class="fas fa-camera"></i> カメラ開始
+                    </button>
+                    <button class="btn btn-game" onclick="stopCamera()" style="display: none;">
+                        <i class="fas fa-stop"></i> カメラ停止
+                    </button>
+                    <button class="btn btn-game" onclick="captureImage()" style="display: none;">
+                        <i class="fas fa-camera-retro"></i> 写真撮影
                     </button>
                 </div>
-                <div class="battle-log mt-4" id="battle-log"></div>
+                <div class="loading-spinner" id="ocrLoading">
+                    <div class="spinner"></div>
+                    <p class="text-white mt-2">OCR処理中...</p>
+                </div>
             </div>
-            
-            <!-- キャラクター一覧 -->
-            <div class="section-card fade-in-up">
-                <h3 class="section-title">
-                    <i class="fas fa-users"></i> キャラクター一覧
-                </h3>
-                <div class="characters-grid" id="characters-list"></div>
+        </div>
+
+        <!-- キャラクター表示エリア -->
+        <div class="section-card fade-in-up" id="characterSection" style="display: none;">
+            <h3 class="text-white mb-3"><i class="fas fa-user"></i> 生成されたキャラクター</h3>
+            <div id="characterDisplay"></div>
+        </div>
+
+        <!-- バトルアリーナ -->
+        <div class="section-card fade-in-up" id="battleSection" style="display: none;">
+            <h3 class="text-white mb-3"><i class="fas fa-sword"></i> バトルアリーナ</h3>
+            <div class="battle-arena">
+                <div id="battleDisplay"></div>
+                <button class="btn btn-game mt-3" onclick="startBattle()">
+                    <i class="fas fa-play"></i> バトル開始
+                </button>
             </div>
+        </div>
+
+        <!-- キャラクター一覧 -->
+        <div class="section-card fade-in-up">
+            <h3 class="text-white mb-3"><i class="fas fa-users"></i> キャラクター一覧</h3>
+            <div id="characters-list" class="characters-grid"></div>
         </div>
     </div>
 
+    <!-- Install Button -->
+    <button id="installButton" class="btn btn-game">
+        <i class="fas fa-download"></i> アプリをインストール
+    </button>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tesseract.js -->
+    <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
+
     <script>
         let currentCharacter = null;
         let opponentCharacter = null;
         let stream = null;
-        let video = document.getElementById('video');
-        let canvas = document.getElementById('canvas');
-        let ctx = canvas.getContext('2d');
-        let deferredPrompt;
-
-        // PWA インストール機能
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installButton').style.display = 'block';
-        });
-
-        document.getElementById('installButton').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('PWAがインストールされました');
-                }
-                deferredPrompt = null;
-                document.getElementById('installButton').style.display = 'none';
-            }
-        });
-
-        // Service Worker 登録
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/static/sw.js')
-                    .then((registration) => {
-                        console.log('Service Worker 登録成功:', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.log('Service Worker 登録失敗:', error);
-                    });
-            });
-        }
 
         // パーティクル効果
         function createParticles() {
-            const particlesContainer = document.getElementById('particles');
+            const particles = document.getElementById('particles');
             for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
                 particle.style.animationDelay = Math.random() * 6 + 's';
                 particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                particlesContainer.appendChild(particle);
+                particles.appendChild(particle);
             }
+        }
+
+        // 手動入力機能
+        function addIngredient() {
+            const container = document.getElementById('ingredients-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'ingredient-row';
+            newRow.innerHTML = `
+                <input type="text" class="form-control ingredient-name" placeholder="成分名（例：タンパク質）">
+                <input type="number" class="form-control ingredient-value" placeholder="数値">
+                <select class="form-control ingredient-unit">
+                    <option value="protein">タンパク質</option>
+                    <option value="fat">脂質</option>
+                    <option value="carbs">炭水化物</option>
+                    <option value="sugar">糖質</option>
+                    <option value="salt">塩分</option>
+                </select>
+                <button class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">×</button>
+            `;
+            container.appendChild(newRow);
+        }
+
+        function removeIngredient(button) {
+            const container = document.getElementById('ingredients-container');
+            if (container.children.length > 1) {
+                button.parentElement.remove();
+            }
+        }
+
+        function generateCharacterFromManual() {
+            const ingredients = [];
+            const rows = document.querySelectorAll('.ingredient-row');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('.ingredient-name').value;
+                const value = parseFloat(row.querySelector('.ingredient-value').value) || 0;
+                const unit = row.querySelector('.ingredient-unit').value;
+                
+                if (name && value > 0) {
+                    ingredients.push({
+                        name: name,
+                        [unit]: value
+                    });
+                }
+            });
+
+            if (ingredients.length === 0) {
+                alert('成分データを入力してください');
+                return;
+            }
+
+            // サンプルキャラクター生成（APIが使えない場合）
+            const names = ["栄養戦士", "成分騎士", "健康勇者", "バランス戦士", "栄養の守護者"];
+            const name = names[Math.floor(Math.random() * names.length)];
+            
+            const totalProtein = ingredients.reduce((sum, ing) => sum + (ing.protein || 0), 0);
+            const totalFat = ingredients.reduce((sum, ing) => sum + (ing.fat || 0), 0);
+            const totalCarbs = ingredients.reduce((sum, ing) => sum + (ing.carbs || 0), 0);
+            const totalSugar = ingredients.reduce((sum, ing) => sum + (ing.sugar || 0), 0);
+            
+            const character = {
+                name: name,
+                hp: 100 + (totalProtein * 2),
+                attack: 50 + (totalFat * 3),
+                defense: 30 + (totalCarbs * 2),
+                speed: 20 + (totalSugar * 5),
+                ingredients: ingredients
+            };
+
+            displayCharacter(character);
         }
 
         // カメラ機能
         async function startCamera() {
             try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('video');
                 video.srcObject = stream;
-                document.getElementById('loading').style.display = 'none';
-            } catch (err) {
-                console.error('カメラの起動に失敗しました:', err);
-                alert('カメラへのアクセスが許可されていません。ブラウザの設定を確認してください。');
+                video.style.display = 'block';
+                document.querySelector('button[onclick="startCamera()"]').style.display = 'none';
+                document.querySelector('button[onclick="stopCamera()"]').style.display = 'inline-block';
+                document.querySelector('button[onclick="captureImage()"]').style.display = 'inline-block';
+            } catch (error) {
+                console.error('カメラアクセスエラー:', error);
+                alert('カメラにアクセスできませんでした');
             }
         }
 
         function stopCamera() {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
-                video.srcObject = null;
+                document.getElementById('video').style.display = 'none';
+                document.querySelector('button[onclick="startCamera()"]').style.display = 'inline-block';
+                document.querySelector('button[onclick="stopCamera()"]').style.display = 'none';
+                document.querySelector('button[onclick="captureImage()"]').style.display = 'none';
             }
         }
 
         function captureImage() {
-            if (!stream) {
-                alert('先にカメラを開始してください');
-                return;
-            }
-
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0);
-
+            context.drawImage(video, 0, 0);
+            
             performOCR();
         }
 
         async function performOCR() {
-            document.getElementById('loading').style.display = 'block';
+            const loading = document.getElementById('ocrLoading');
+            loading.style.display = 'block';
             
             try {
-                const result = await Tesseract.recognize(
-                    canvas,
-                    'jpn+eng',
-                    {
-                        logger: m => console.log(m)
-                    }
-                );
-
-                const ocrText = result.data.text;
-                document.getElementById('ocr-text').innerHTML = `<pre>${ocrText}</pre>`;
+                const canvas = document.getElementById('canvas');
+                const result = await Tesseract.recognize(canvas, 'jpn', {
+                    logger: m => console.log(m)
+                });
                 
-                const ingredients = extractIngredients(ocrText);
-                if (ingredients) {
+                const extractedText = result.data.text;
+                const ingredients = extractIngredients(extractedText);
+                
+                if (ingredients.length > 0) {
                     fillIngredientForm(ingredients);
+                } else {
+                    alert('成分データを検出できませんでした。手動で入力してください。');
                 }
-                
             } catch (error) {
-                console.error('OCR処理に失敗しました:', error);
-                alert('画像の解析に失敗しました。もう一度試してください。');
+                console.error('OCRエラー:', error);
+                alert('OCR処理中にエラーが発生しました');
             } finally {
-                document.getElementById('loading').style.display = 'none';
+                loading.style.display = 'none';
             }
         }
 
         function extractIngredients(text) {
-            const ingredients = {};
+            const ingredients = [];
+            const lines = text.split('\n');
             
-            const proteinMatch = text.match(/タンパク質[：:]\s*([0-9.]+)/);
-            if (proteinMatch) {
-                ingredients.protein = parseFloat(proteinMatch[1]);
-            }
+            lines.forEach(line => {
+                const proteinMatch = line.match(/タンパク質[：:]\s*(\d+)/);
+                const fatMatch = line.match(/脂質[：:]\s*(\d+)/);
+                const carbsMatch = line.match(/炭水化物[：:]\s*(\d+)/);
+                const sugarMatch = line.match(/糖質[：:]\s*(\d+)/);
+                const saltMatch = line.match(/塩分[：:]\s*(\d+)/);
+                
+                if (proteinMatch) ingredients.push({ protein: parseFloat(proteinMatch[1]) });
+                if (fatMatch) ingredients.push({ fat: parseFloat(fatMatch[1]) });
+                if (carbsMatch) ingredients.push({ carbs: parseFloat(carbsMatch[1]) });
+                if (sugarMatch) ingredients.push({ sugar: parseFloat(sugarMatch[1]) });
+                if (saltMatch) ingredients.push({ salt: parseFloat(saltMatch[1]) });
+            });
             
-            const fatMatch = text.match(/脂質[：:]\s*([0-9.]+)/);
-            if (fatMatch) {
-                ingredients.fat = parseFloat(fatMatch[1]);
-            }
-            
-            const carbsMatch = text.match(/炭水化物[：:]\s*([0-9.]+)/);
-            if (carbsMatch) {
-                ingredients.carbs = parseFloat(carbsMatch[1]);
-            }
-            
-            const sugarMatch = text.match(/糖質[：:]\s*([0-9.]+)/);
-            if (sugarMatch) {
-                ingredients.sugar = parseFloat(sugarMatch[1]);
-            }
-            
-            const saltMatch = text.match(/食塩相当量[：:]\s*([0-9.]+)/);
-            if (saltMatch) {
-                ingredients.salt = parseFloat(saltMatch[1]);
-            }
-            
-            const proteinMatchEn = text.match(/Protein[：:]\s*([0-9.]+)/i);
-            if (proteinMatchEn && !ingredients.protein) {
-                ingredients.protein = parseFloat(proteinMatchEn[1]);
-            }
-            
-            const fatMatchEn = text.match(/Fat[：:]\s*([0-9.]+)/i);
-            if (fatMatchEn && !ingredients.fat) {
-                ingredients.fat = parseFloat(fatMatchEn[1]);
-            }
-            
-            const carbsMatchEn = text.match(/Carbohydrate[：:]\s*([0-9.]+)/i);
-            if (carbsMatchEn && !ingredients.carbs) {
-                ingredients.carbs = parseFloat(carbsMatchEn[1]);
-            }
-            
-            return Object.keys(ingredients).length > 0 ? ingredients : null;
+            return ingredients;
         }
 
         function fillIngredientForm(ingredients) {
-            if (ingredients.protein) {
-                document.getElementById('protein').value = ingredients.protein;
-            }
-            if (ingredients.fat) {
-                document.getElementById('fat').value = ingredients.fat;
-            }
-            if (ingredients.carbs) {
-                document.getElementById('carbs').value = ingredients.carbs;
-            }
-            if (ingredients.sugar) {
-                document.getElementById('sugar').value = ingredients.sugar;
-            }
-            if (ingredients.salt) {
-                document.getElementById('salt').value = ingredients.salt;
-            }
+            const container = document.getElementById('ingredients-container');
+            container.innerHTML = '';
             
-            alert('成分データを自動入力しました！「キャラクター生成」ボタンをクリックしてください。');
-        }
-
-        function generateCharacter() {
-            const ingredients = [
-                { protein: parseFloat(document.getElementById('protein').value) || 0 },
-                { fat: parseFloat(document.getElementById('fat').value) || 0 },
-                { carbs: parseFloat(document.getElementById('carbs').value) || 0 },
-                { sugar: parseFloat(document.getElementById('sugar').value) || 0 },
-                { salt: parseFloat(document.getElementById('salt').value) || 0 }
-            ];
-
-            fetch('/api/analyze_ingredients', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ingredients: ingredients })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    currentCharacter = data.character;
-                    displayCharacter(currentCharacter, 'character-display');
-                    generateOpponent();
-                    document.getElementById('battle-arena').style.display = 'block';
-                    document.getElementById('battle-arena').classList.add('fade-in-up');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('キャラクター生成に失敗しました');
+            ingredients.forEach(ing => {
+                const row = document.createElement('div');
+                row.className = 'ingredient-row';
+                
+                let name = '';
+                let value = 0;
+                let unit = 'protein';
+                
+                if (ing.protein) { name = 'タンパク質'; value = ing.protein; unit = 'protein'; }
+                else if (ing.fat) { name = '脂質'; value = ing.fat; unit = 'fat'; }
+                else if (ing.carbs) { name = '炭水化物'; value = ing.carbs; unit = 'carbs'; }
+                else if (ing.sugar) { name = '糖質'; value = ing.sugar; unit = 'sugar'; }
+                else if (ing.salt) { name = '塩分'; value = ing.salt; unit = 'salt'; }
+                
+                row.innerHTML = `
+                    <input type="text" class="form-control ingredient-name" value="${name}">
+                    <input type="number" class="form-control ingredient-value" value="${value}">
+                    <select class="form-control ingredient-unit">
+                        <option value="protein" ${unit === 'protein' ? 'selected' : ''}>タンパク質</option>
+                        <option value="fat" ${unit === 'fat' ? 'selected' : ''}>脂質</option>
+                        <option value="carbs" ${unit === 'carbs' ? 'selected' : ''}>炭水化物</option>
+                        <option value="sugar" ${unit === 'sugar' ? 'selected' : ''}>糖質</option>
+                        <option value="salt" ${unit === 'salt' ? 'selected' : ''}>塩分</option>
+                    </select>
+                    <button class="btn btn-danger remove-ingredient" onclick="removeIngredient(this)">×</button>
+                `;
+                container.appendChild(row);
             });
         }
 
-        function displayCharacter(character, elementId) {
-            const element = document.getElementById(elementId);
-            element.innerHTML = `
+        function displayCharacter(character) {
+            currentCharacter = character;
+            const section = document.getElementById('characterSection');
+            const display = document.getElementById('characterDisplay');
+            
+            display.innerHTML = `
                 <div class="character-card">
-                    <h4 class="character-name">
-                        <i class="fas fa-user"></i> ${character.name}
-                    </h4>
-                    <div class="stats-container">
-                        <div class="stat-item">
-                            <div class="stat-label">
-                                <span>HP</span>
-                                <span>${character.hp}</span>
-                            </div>
+                    <h4 class="text-white">${character.name}</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-white-50">HP: ${character.hp}</p>
                             <div class="stats-bar">
-                                <div class="stats-fill hp-fill" style="width: ${(character.hp / 200) * 100}%"></div>
+                                <div class="stats-fill" style="width: ${Math.min(character.hp / 2, 100)}%"></div>
                             </div>
                         </div>
-                        
-                        <div class="stat-item">
-                            <div class="stat-label">
-                                <span>攻撃力</span>
-                                <span>${character.attack}</span>
-                            </div>
+                        <div class="col-md-6">
+                            <p class="text-white-50">攻撃力: ${character.attack}</p>
                             <div class="stats-bar">
-                                <div class="stats-fill attack-fill" style="width: ${(character.attack / 100) * 100}%"></div>
+                                <div class="stats-fill" style="width: ${Math.min(character.attack, 100)}%"></div>
                             </div>
                         </div>
-                        
-                        <div class="stat-item">
-                            <div class="stat-label">
-                                <span>防御力</span>
-                                <span>${character.defense}</span>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-white-50">防御力: ${character.defense}</p>
                             <div class="stats-bar">
-                                <div class="stats-fill defense-fill" style="width: ${(character.defense / 100) * 100}%"></div>
+                                <div class="stats-fill" style="width: ${Math.min(character.defense, 100)}%"></div>
                             </div>
                         </div>
-                        
-                        <div class="stat-item">
-                            <div class="stat-label">
-                                <span>スピード</span>
-                                <span>${character.speed}</span>
-                            </div>
+                        <div class="col-md-6">
+                            <p class="text-white-50">スピード: ${character.speed}</p>
                             <div class="stats-bar">
-                                <div class="stats-fill speed-fill" style="width: ${(character.speed / 100) * 100}%"></div>
+                                <div class="stats-fill" style="width: ${Math.min(character.speed, 100)}%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
+            
+            section.style.display = 'block';
+            generateOpponent();
         }
 
         function generateOpponent() {
-            const opponentNames = ["栄養の敵", "成分の脅威", "健康の試練", "バランスの壁", "栄養の守護者"];
-            const randomName = opponentNames[Math.floor(Math.random() * opponentNames.length)];
+            const names = ["敵戦士", "暗黒騎士", "混沌の勇者", "闇の戦士", "邪悪の守護者"];
+            const name = names[Math.floor(Math.random() * names.length)];
             
             opponentCharacter = {
-                name: randomName,
-                hp: Math.floor(Math.random() * 100) + 100,
-                attack: Math.floor(Math.random() * 50) + 30,
-                defense: Math.floor(Math.random() * 40) + 20,
-                speed: Math.floor(Math.random() * 30) + 15
+                name: name,
+                hp: 120 + Math.floor(Math.random() * 80),
+                attack: 60 + Math.floor(Math.random() * 40),
+                defense: 40 + Math.floor(Math.random() * 30),
+                speed: 25 + Math.floor(Math.random() * 25)
             };
             
-            displayCharacter(opponentCharacter, 'opponent-character');
+            const section = document.getElementById('battleSection');
+            const display = document.getElementById('battleDisplay');
+            
+            display.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="text-white">あなたのキャラクター</h5>
+                        <div class="character-card">
+                            <h6 class="text-white">${currentCharacter.name}</h6>
+                            <p class="text-white-50">HP: ${currentCharacter.hp} | 攻撃: ${currentCharacter.attack} | 防御: ${currentCharacter.defense} | スピード: ${currentCharacter.speed}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-white">敵キャラクター</h5>
+                        <div class="character-card">
+                            <h6 class="text-white">${opponentCharacter.name}</h6>
+                            <p class="text-white-50">HP: ${opponentCharacter.hp} | 攻撃: ${opponentCharacter.attack} | 防御: ${opponentCharacter.defense} | スピード: ${opponentCharacter.speed}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            section.style.display = 'block';
         }
 
         function startBattle() {
             if (!currentCharacter || !opponentCharacter) {
-                alert('キャラクターを生成してください');
+                alert('キャラクターが生成されていません');
                 return;
             }
-
-            fetch('/api/battle', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    player_character: currentCharacter,
-                    opponent_character: opponentCharacter
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    displayBattleResult(data);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('バトルに失敗しました');
-            });
+            
+            const playerPower = currentCharacter.attack + currentCharacter.speed;
+            const opponentPower = opponentCharacter.attack + opponentCharacter.speed;
+            
+            const playerRoll = Math.floor(Math.random() * 20) + 1;
+            const opponentRoll = Math.floor(Math.random() * 20) + 1;
+            
+            const playerTotal = playerPower + playerRoll;
+            const opponentTotal = opponentPower + opponentRoll;
+            
+            let result, expGained;
+            if (playerTotal > opponentTotal) {
+                result = 'win';
+                expGained = 10;
+            } else if (playerTotal < opponentTotal) {
+                result = 'lose';
+                expGained = 5;
+            } else {
+                result = 'draw';
+                expGained = 7;
+            }
+            
+            displayBattleResult(result, expGained, playerTotal, opponentTotal);
         }
 
-        function displayBattleResult(battleData) {
-            const battleLog = document.getElementById('battle-log');
-            battleLog.innerHTML = '';
+        function displayBattleResult(result, expGained, playerTotal, opponentTotal) {
+            const display = document.getElementById('battleDisplay');
+            const resultText = result === 'win' ? '勝利！' : result === 'lose' ? '敗北...' : '引き分け';
+            const resultClass = result === 'win' ? 'text-success' : result === 'lose' ? 'text-danger' : 'text-warning';
             
-            battleData.battle_log.forEach(log => {
-                const logEntry = document.createElement('div');
-                logEntry.className = 'text-light mb-2';
-                logEntry.textContent = log;
-                battleLog.appendChild(logEntry);
-            });
-            
-            const resultColor = battleData.result === 'win' ? '#00b894' : 
-                              battleData.result === 'lose' ? '#e17055' : '#fdcb6e';
-            
-            const resultEntry = document.createElement('div');
-            resultEntry.className = 'text-center mt-3 p-3';
-            resultEntry.style.backgroundColor = resultColor;
-            resultEntry.style.borderRadius = '15px';
-            resultEntry.style.fontWeight = 'bold';
-            resultEntry.innerHTML = `
-                <strong>${battleData.result === 'win' ? '勝利！' : 
-                         battleData.result === 'lose' ? '敗北...' : '引き分け'}</strong><br>
-                獲得経験値: ${battleData.exp_gained}
+            display.innerHTML += `
+                <div class="mt-4">
+                    <h4 class="${resultClass}">${resultText}</h4>
+                    <p class="text-white">獲得経験値: ${expGained}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-white">${currentCharacter.name}の攻撃力: ${currentCharacter.attack + currentCharacter.speed} + ${playerTotal - (currentCharacter.attack + currentCharacter.speed)} = ${playerTotal}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-white">${opponentCharacter.name}の攻撃力: ${opponentCharacter.attack + opponentCharacter.speed} + ${opponentTotal - (opponentCharacter.attack + opponentCharacter.speed)} = ${opponentTotal}</p>
+                        </div>
+                    </div>
+                </div>
             `;
-            battleLog.appendChild(resultEntry);
         }
 
         function loadCharacters() {
@@ -1093,7 +736,6 @@
                 charactersList.innerHTML = '';
                 
                 if (data.characters.length === 0) {
-                    // キャラクターがない場合はサンプルキャラクターを表示
                     loadSampleCharacters();
                 } else {
                     data.characters.forEach(character => {
@@ -1119,39 +761,85 @@
         }
 
         function loadSampleCharacters() {
-            fetch('/api/sample_characters')
-            .then(response => response.json())
-            .then(data => {
-                const charactersList = document.getElementById('characters-list');
-                charactersList.innerHTML = '<div class="col-12 mb-3"><p class="text-center text-muted">サンプルキャラクター</p></div>';
-                
-                data.characters.forEach(character => {
-                    const characterCard = document.createElement('div');
-                    characterCard.className = 'character-mini-card';
-                    characterCard.innerHTML = `
-                        <h5>${character.name}</h5>
-                        <p>レベル: ${character.level}</p>
-                        <p>経験値: ${character.exp}</p>
-                        <p>HP: ${character.hp}</p>
-                        <p>攻撃力: ${character.attack}</p>
-                        <p>防御力: ${character.defense}</p>
-                        <p>スピード: ${character.speed}</p>
-                    `;
-                    charactersList.appendChild(characterCard);
-                });
-            })
-            .catch(error => {
-                console.error('Error loading sample characters:', error);
+            const sampleCharacters = [
+                {
+                    name: '栄養戦士',
+                    level: 5, exp: 150, hp: 180, attack: 85, defense: 70, speed: 45
+                },
+                {
+                    name: '成分騎士',
+                    level: 3, exp: 80, hp: 140, attack: 65, defense: 55, speed: 35
+                },
+                {
+                    name: '健康勇者',
+                    level: 7, exp: 220, hp: 200, attack: 95, defense: 80, speed: 50
+                },
+                {
+                    name: 'バランス戦士',
+                    level: 4, exp: 100, hp: 160, attack: 75, defense: 65, speed: 40
+                },
+                {
+                    name: '栄養の守護者',
+                    level: 6, exp: 180, hp: 190, attack: 90, defense: 75, speed: 48
+                }
+            ];
+            
+            const charactersList = document.getElementById('characters-list');
+            charactersList.innerHTML = '<div class="col-12 mb-3"><p class="text-center text-muted">サンプルキャラクター</p></div>';
+            
+            sampleCharacters.forEach(character => {
+                const characterCard = document.createElement('div');
+                characterCard.className = 'character-mini-card';
+                characterCard.innerHTML = `
+                    <h5>${character.name}</h5>
+                    <p>レベル: ${character.level}</p>
+                    <p>経験値: ${character.exp}</p>
+                    <p>HP: ${character.hp}</p>
+                    <p>攻撃力: ${character.attack}</p>
+                    <p>防御力: ${character.defense}</p>
+                    <p>スピード: ${character.speed}</p>
+                `;
+                charactersList.appendChild(characterCard);
             });
         }
 
-        window.onload = function() {
+        // PWA Install
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installButton').style.display = 'block';
+        });
+
+        document.getElementById('installButton').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('PWA installed');
+                }
+                deferredPrompt = null;
+                document.getElementById('installButton').style.display = 'none';
+            }
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/static/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker 登録成功:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker 登録失敗:', error);
+                    });
+            });
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             loadCharacters();
-        };
-
-        window.addEventListener('beforeunload', function() {
-            stopCamera();
         });
     </script>
 </body>
