@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>栄養成分学習サイト - 成分表示から栄養知識を学ぼう！健康な食生活のガイド</title>
+    <title>栄養成分バトラー - 成分表示から栄養価を分析・計算！栄養成分の戦い</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="description" content="食品の成分表示を理解し、栄養素の知識を深める教育サイト。栄養成分の働き、健康効果、バランスの良い食事について詳しく解説。成分表示の読み方から栄養価の計算まで、実践的な栄養知識を身につけよう。">
-    <meta name="keywords" content="栄養成分,栄養素,健康,食事,バランス,成分表示,栄養知識,教育,健康管理,食生活,栄養計算,成分分析">
+    <meta name="description" content="食品の成分表示をバトル形式で分析！栄養成分の計算、栄養価の評価ができる教育サイト。成分表示の読み方から栄養価の計算まで、楽しく栄養知識を身につけよう。">
+    <meta name="keywords" content="栄養成分,成分表示,栄養計算,成分分析,栄養バトラー,栄養知識,健康,食事,バランス,教育,健康管理,食生活">
     <meta name="author" content="成分表示バトラー">
     <meta name="theme-color" content="#6c5ce7">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -585,11 +585,11 @@
         <!-- ヘッダー -->
         <div class="section-card text-center">
             <h1 class="display-4 text-white mb-3">
-                <i class="fas fa-apple-alt"></i> 栄養成分学習サイト
+                <i class="fas fa-fist-raised"></i> 栄養成分バトラー
             </h1>
             <p class="lead text-white mb-4">
-                食品の成分表示を理解し、栄養素の知識を深めよう！<br>
-                <span class="text-warning">健康な食生活のための実践的な栄養教育サイト</span>
+                食品の成分表示をバトル形式で分析！<br>
+                <span class="text-warning">栄養成分の計算・評価で楽しく栄養知識を学ぼう</span>
             </p>
             <div class="row">
                 <div class="col-md-4 mb-3">
@@ -601,9 +601,9 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="feature-item">
-                        <i class="fas fa-calculator text-warning"></i>
-                        <h5>栄養価計算</h5>
-                        <p>成分から栄養価を計算・分析</p>
+                        <i class="fas fa-fist-raised text-warning"></i>
+                        <h5>成分バトル</h5>
+                        <p>栄養成分をバトル形式で分析</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
@@ -724,7 +724,7 @@
                         <i class="fas fa-plus"></i> 成分を追加
                     </button>
                     <button class="btn btn-game" onclick="generateCharacterFromManual()">
-                        <i class="fas fa-calculator"></i> 栄養価分析
+                        <i class="fas fa-fist-raised"></i> 成分バトル開始
                     </button>
                 </div>
             </div>
@@ -753,26 +753,26 @@
             </div>
         </div>
 
-        <!-- 栄養価分析結果エリア -->
+        <!-- 成分バトラー結果エリア -->
         <div class="section-card fade-in-up" id="characterSection" style="display: none;">
-            <h3 class="text-white mb-3"><i class="fas fa-chart-bar"></i> 栄養価分析結果</h3>
+            <h3 class="text-white mb-3"><i class="fas fa-trophy"></i> 成分バトラー結果</h3>
             <div id="characterDisplay"></div>
         </div>
 
-        <!-- 栄養バランス評価 -->
+        <!-- 成分バトルアリーナ -->
         <div class="section-card fade-in-up" id="battleSection" style="display: none;">
-            <h3 class="text-white mb-3"><i class="fas fa-balance-scale"></i> 栄養バランス評価</h3>
+            <h3 class="text-white mb-3"><i class="fas fa-fist-raised"></i> 成分バトルアリーナ</h3>
             <div class="battle-arena">
                 <div id="battleDisplay"></div>
                 <button class="btn btn-game mt-3" onclick="startBattle()">
-                    <i class="fas fa-chart-pie"></i> バランス分析
+                    <i class="fas fa-sword"></i> バトル開始
                 </button>
             </div>
         </div>
 
-        <!-- 栄養分析履歴 -->
+        <!-- バトル履歴 -->
         <div class="section-card fade-in-up">
-            <h3 class="text-white mb-3"><i class="fas fa-history"></i> 栄養分析履歴</h3>
+            <h3 class="text-white mb-3"><i class="fas fa-history"></i> バトル履歴</h3>
             <div id="characters-list" class="characters-grid"></div>
         </div>
 
@@ -880,7 +880,7 @@
             </div>
             <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
             <p class="text-white-50 mb-0">
-                <small>© 2024 栄養成分学習サイト - 健康な食生活のための教育サイト</small>
+                <small>© 2024 栄養成分バトラー - 成分表示から栄養価を分析・計算</small>
             </p>
         </div>
     </div>
@@ -960,7 +960,7 @@
         }
 
         function generateCharacterFromManual() {
-            console.log('栄養価分析開始');
+            console.log('成分バトル開始');
             
             const ingredients = [];
             const rows = document.querySelectorAll('.ingredient-row');
@@ -989,9 +989,9 @@
                 return;
             }
 
-            // フロントエンドで栄養分析結果生成
-            const analysisNames = ["栄養バランス分析", "成分評価レポート", "栄養価計算結果", "健康度評価", "栄養素分析"];
-            const name = analysisNames[Math.floor(Math.random() * analysisNames.length)];
+            // フロントエンドで成分バトラー結果生成
+            const battleNames = ["栄養成分戦士", "成分バトラー", "栄養の勇者", "成分の守護者", "栄養成分騎士"];
+            const name = battleNames[Math.floor(Math.random() * battleNames.length)];
             
             const totalProtein = ingredients.reduce((sum, ing) => sum + (ing.protein || 0), 0);
             const totalFat = ingredients.reduce((sum, ing) => sum + (ing.fat || 0), 0);
@@ -1001,25 +1001,24 @@
             
             console.log('計算結果:', { totalProtein, totalFat, totalCarbs, totalSugar, totalSalt });
             
-            const analysis = {
+            const battleCharacter = {
                 name: name,
-                totalCalories: (totalProtein * 4) + (totalFat * 9) + (totalCarbs * 4),
-                proteinScore: 100 + (totalProtein * 2),
-                fatScore: 50 + (totalFat * 3),
-                carbScore: 30 + (totalCarbs * 2),
-                balanceScore: 20 + (totalSugar * 5),
+                hp: 100 + (totalProtein * 2),
+                attack: 50 + (totalFat * 3),
+                defense: 30 + (totalCarbs * 2),
+                speed: 20 + (totalSugar * 5),
                 ingredients: ingredients
             };
 
-            console.log('生成された栄養分析:', analysis);
+            console.log('生成された成分バトラー:', battleCharacter);
 
             try {
-                displayCharacter(analysis);
-                console.log('栄養分析表示完了');
-                alert('栄養価分析完了！');
+                displayCharacter(battleCharacter);
+                console.log('成分バトラー表示完了');
+                alert('成分バトル開始！');
             } catch (error) {
-                console.error('栄養分析表示エラー:', error);
-                alert('栄養分析表示でエラーが発生しました: ' + error.message);
+                console.error('成分バトラー表示エラー:', error);
+                alert('成分バトラー表示でエラーが発生しました: ' + error.message);
             }
         }
 
@@ -1225,10 +1224,10 @@
             };
         }
 
-        // 栄養分析結果表示を改善
-        function displayCharacter(analysis) {
-            const avatar = generateCharacterAvatar(analysis);
-            currentCharacter = analysis;
+        // 成分バトラー結果表示を改善
+        function displayCharacter(character) {
+            const avatar = generateCharacterAvatar(character);
+            currentCharacter = character;
             
             const display = document.getElementById('characterDisplay');
             const section = document.getElementById('characterSection');
@@ -1236,29 +1235,29 @@
             display.innerHTML = `
                 <div class="character-card">
                     <div class="character-avatar" style="background-color: ${avatar.color}; width: ${avatar.size}px; height: ${avatar.size}px; border-radius: 50%;"></div>
-                    <h4 class="text-white">${analysis.name}</h4>
+                    <h4 class="text-white">${character.name}</h4>
                     <div class="stats-grid">
                         <div class="stat-item">
-                            <span class="stat-label">総カロリー</span>
-                            <span class="stat-value">${analysis.totalCalories}kcal</span>
+                            <span class="stat-label">HP</span>
+                            <span class="stat-value">${character.hp}</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-label">タンパク質スコア</span>
-                            <span class="stat-value">${analysis.proteinScore}</span>
+                            <span class="stat-label">攻撃力</span>
+                            <span class="stat-value">${character.attack}</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-label">脂質スコア</span>
-                            <span class="stat-value">${analysis.fatScore}</span>
+                            <span class="stat-label">防御力</span>
+                            <span class="stat-value">${character.defense}</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-label">炭水化物スコア</span>
-                            <span class="stat-value">${analysis.carbScore}</span>
+                            <span class="stat-label">スピード</span>
+                            <span class="stat-value">${character.speed}</span>
                         </div>
                     </div>
                     <div class="ingredients-list">
                         <h6 class="text-white">成分:</h6>
                         <ul class="text-white">
-                            ${analysis.ingredients.map(ing => `<li>${ing.name}: ${ing.protein || ing.fat || ing.carbs || ing.sugar || ing.salt}g</li>`).join('')}
+                            ${character.ingredients.map(ing => `<li>${ing.name}: ${ing.protein || ing.fat || ing.carbs || ing.sugar || ing.salt}g</li>`).join('')}
                         </ul>
                     </div>
                 </div>
@@ -1270,16 +1269,15 @@
         }
 
         function generateOpponent() {
-            const names = ["理想的な栄養バランス", "健康的な食事パターン", "バランスの良い栄養構成", "推奨栄養バランス", "理想的な成分比率"];
+            const names = ["栄養の敵", "成分の敵", "健康の敵", "バランスの敵", "栄養の敵"];
             const name = names[Math.floor(Math.random() * names.length)];
             
             opponentCharacter = {
                 name: name,
-                totalCalories: 600 + Math.floor(Math.random() * 200),
-                proteinScore: 120 + Math.floor(Math.random() * 30),
-                fatScore: 60 + Math.floor(Math.random() * 20),
-                carbScore: 40 + Math.floor(Math.random() * 25),
-                balanceScore: 25 + Math.floor(Math.random() * 25)
+                hp: 120 + Math.floor(Math.random() * 80),
+                attack: 60 + Math.floor(Math.random() * 40),
+                defense: 40 + Math.floor(Math.random() * 30),
+                speed: 25 + Math.floor(Math.random() * 25)
             };
             
             const section = document.getElementById('battleSection');
@@ -1288,17 +1286,17 @@
             display.innerHTML = `
                 <div class="row">
                     <div class="col-md-6">
-                        <h5 class="text-white">あなたの栄養分析</h5>
+                        <h5 class="text-white">あなたの成分バトラー</h5>
                         <div class="character-card">
                             <h6 class="text-white">${currentCharacter.name}</h6>
-                            <p class="text-white-50">カロリー: ${currentCharacter.totalCalories}kcal | タンパク質: ${currentCharacter.proteinScore} | 脂質: ${currentCharacter.fatScore} | 炭水化物: ${currentCharacter.carbScore}</p>
+                            <p class="text-white-50">HP: ${currentCharacter.hp} | 攻撃: ${currentCharacter.attack} | 防御: ${currentCharacter.defense} | スピード: ${currentCharacter.speed}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h5 class="text-white">理想的な栄養バランス</h5>
+                        <h5 class="text-white">敵キャラクター</h5>
                         <div class="character-card">
                             <h6 class="text-white">${opponentCharacter.name}</h6>
-                            <p class="text-white-50">カロリー: ${opponentCharacter.totalCalories}kcal | タンパク質: ${opponentCharacter.proteinScore} | 脂質: ${opponentCharacter.fatScore} | 炭水化物: ${opponentCharacter.carbScore}</p>
+                            <p class="text-white-50">HP: ${opponentCharacter.hp} | 攻撃: ${opponentCharacter.attack} | 防御: ${opponentCharacter.defense} | スピード: ${opponentCharacter.speed}</p>
                         </div>
                     </div>
                 </div>
@@ -1309,75 +1307,69 @@
 
         function startBattle() {
             if (!currentCharacter) {
-                alert('まず栄養価分析を実行してください！');
+                alert('まず成分バトルを開始してください！');
                 return;
             }
 
-            // フロントエンドで理想的な栄養バランス生成
-            const idealNames = ["理想的な栄養バランス", "健康的な食事パターン", "バランスの良い栄養構成", "推奨栄養バランス", "理想的な成分比率"];
-            const idealName = idealNames[Math.floor(Math.random() * idealNames.length)];
+            // フロントエンドで敵キャラクター生成
+            const enemyNames = ["栄養の敵", "成分の敵", "健康の敵", "バランスの敵", "栄養の敵"];
+            const enemyName = enemyNames[Math.floor(Math.random() * enemyNames.length)];
             
-            const ideal = {
-                name: idealName,
-                totalCalories: 600 + Math.floor(Math.random() * 200),
-                proteinScore: 120 + Math.floor(Math.random() * 30),
-                fatScore: 60 + Math.floor(Math.random() * 20),
-                carbScore: 40 + Math.floor(Math.random() * 25),
-                balanceScore: 25 + Math.floor(Math.random() * 25)
+            const enemy = {
+                name: enemyName,
+                hp: 80 + Math.floor(Math.random() * 40),
+                attack: 40 + Math.floor(Math.random() * 30),
+                defense: 20 + Math.floor(Math.random() * 25),
+                speed: 15 + Math.floor(Math.random() * 20)
             };
 
-            console.log('栄養バランス分析開始:', { current: currentCharacter, ideal: ideal });
+            console.log('成分バトル開始:', { player: currentCharacter, enemy: enemy });
 
-            // 栄養バランス分析ロジック
-            let currentScore = 0;
-            let idealScore = 0;
-            let analysisLog = [];
+            // バトルロジック
+            let playerHP = currentCharacter.hp;
+            let enemyHP = enemy.hp;
+            let battleLog = [];
 
-            // カロリー比較
-            const calorieDiff = Math.abs(currentCharacter.totalCalories - ideal.totalCalories);
-            if (calorieDiff <= 100) {
-                currentScore += 30;
-                analysisLog.push(`カロリー: 理想的な範囲内です（差: ${calorieDiff}kcal）`);
-            } else {
-                idealScore += 30;
-                analysisLog.push(`カロリー: 理想的な範囲を超えています（差: ${calorieDiff}kcal）`);
-            }
+            // スピードで先攻決定
+            const playerFirst = currentCharacter.speed >= enemy.speed;
 
-            // タンパク質比較
-            const proteinDiff = Math.abs(currentCharacter.proteinScore - ideal.proteinScore);
-            if (proteinDiff <= 20) {
-                currentScore += 25;
-                analysisLog.push(`タンパク質: バランスが良いです（差: ${proteinDiff}ポイント）`);
-            } else {
-                idealScore += 25;
-                analysisLog.push(`タンパク質: 改善の余地があります（差: ${proteinDiff}ポイント）`);
-            }
+            while (playerHP > 0 && enemyHP > 0) {
+                if (playerFirst) {
+                    // プレイヤー攻撃
+                    const damage = Math.max(1, currentCharacter.attack - enemy.defense);
+                    enemyHP -= damage;
+                    battleLog.push(`${currentCharacter.name}の攻撃！${enemy.name}に${damage}ダメージ！`);
+                    animateBattle(currentCharacter, enemy, damage); // バトルアニメーション
 
-            // 脂質比較
-            const fatDiff = Math.abs(currentCharacter.fatScore - ideal.fatScore);
-            if (fatDiff <= 15) {
-                currentScore += 25;
-                analysisLog.push(`脂質: 適切な量です（差: ${fatDiff}ポイント）`);
-            } else {
-                idealScore += 25;
-                analysisLog.push(`脂質: 調整が必要です（差: ${fatDiff}ポイント）`);
-            }
+                    if (enemyHP <= 0) break;
 
-            // 炭水化物比較
-            const carbDiff = Math.abs(currentCharacter.carbScore - ideal.carbScore);
-            if (carbDiff <= 15) {
-                currentScore += 20;
-                analysisLog.push(`炭水化物: バランスが取れています（差: ${carbDiff}ポイント）`);
-            } else {
-                idealScore += 20;
-                analysisLog.push(`炭水化物: 見直しが必要です（差: ${carbDiff}ポイント）`);
+                    // 敵攻撃
+                    const enemyDamage = Math.max(1, enemy.attack - currentCharacter.defense);
+                    playerHP -= enemyDamage;
+                    battleLog.push(`${enemy.name}の攻撃！${currentCharacter.name}に${enemyDamage}ダメージ！`);
+                    animateBattle(enemy, currentCharacter, enemyDamage); // バトルアニメーション
+                } else {
+                    // 敵攻撃
+                    const enemyDamage = Math.max(1, enemy.attack - currentCharacter.defense);
+                    playerHP -= enemyDamage;
+                    battleLog.push(`${enemy.name}の攻撃！${currentCharacter.name}に${enemyDamage}ダメージ！`);
+                    animateBattle(enemy, currentCharacter, enemyDamage); // バトルアニメーション
+
+                    if (playerHP <= 0) break;
+
+                    // プレイヤー攻撃
+                    const damage = Math.max(1, currentCharacter.attack - enemy.defense);
+                    enemyHP -= damage;
+                    battleLog.push(`${currentCharacter.name}の攻撃！${enemy.name}に${damage}ダメージ！`);
+                    animateBattle(currentCharacter, enemy, damage); // バトルアニメーション
+                }
             }
 
             const result = {
-                winner: currentScore >= idealScore ? currentCharacter.name : ideal.name,
-                currentScore: currentScore,
-                idealScore: idealScore,
-                battleLog: analysisLog
+                winner: playerHP > 0 ? currentCharacter.name : enemy.name,
+                playerHP: Math.max(0, playerHP),
+                enemyHP: Math.max(0, enemyHP),
+                battleLog: battleLog
             };
 
             displayBattleResult(result);
@@ -1407,11 +1399,11 @@
             }, 2000);
         }
 
-        // 栄養バランス分析結果表示を改善
+        // バトル結果表示を改善
         function displayBattleResult(result) {
             const display = document.getElementById('battleDisplay');
-            const resultText = result.winner === currentCharacter.name ? '栄養バランス良好！' : '改善の余地があります';
-            const resultClass = result.winner === currentCharacter.name ? 'text-success' : 'text-warning';
+            const resultText = result.winner === currentCharacter.name ? '勝利！' : '敗北...';
+            const resultClass = result.winner === currentCharacter.name ? 'text-success' : 'text-danger';
             
             display.innerHTML += `
                 <div class="battle-result mt-4">
@@ -1422,131 +1414,130 @@
                     <div class="battle-stats">
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="text-white">あなたの栄養スコア: ${result.currentScore}ポイント</p>
+                                <p class="text-white">${currentCharacter.name}のHP: ${result.playerHP}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="text-white">理想的なスコア: ${result.idealScore}ポイント</p>
+                                <p class="text-white">${result.winner}のHP: ${result.enemyHP}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <h5 class="text-white">改善のアドバイス:</h5>
-                        <ul class="text-white-50">
-                            <li>バランスの良い食事を心がけましょう</li>
-                            <li>野菜や果物を積極的に摂取しましょう</li>
-                            <li>適度な運動と組み合わせることが重要です</li>
-                        </ul>
-                    </div>
                 </div>
             `;
+            
+            // 勝利時にリワード広告を表示
+            if (result.winner === currentCharacter.name) {
+                setTimeout(() => {
+                    showRewardedAdOnVictory();
+                }, 1000);
+            }
         }
 
-        function displayCharacterList(analyses) {
+        function displayCharacterList(characters) {
             const charactersList = document.getElementById('characters-list');
             charactersList.innerHTML = '';
             
-            if (analyses.length === 0) {
+            if (characters.length === 0) {
                 loadSampleCharacters();
             } else {
-                analyses.forEach(analysis => {
-                    const analysisCard = document.createElement('div');
-                    analysisCard.className = 'character-mini-card';
-                    analysisCard.innerHTML = `
-                        <h5>${analysis.name}</h5>
-                        <p>総カロリー: ${analysis.totalCalories}kcal</p>
-                        <p>タンパク質スコア: ${analysis.proteinScore}</p>
-                        <p>脂質スコア: ${analysis.fatScore}</p>
-                        <p>炭水化物スコア: ${analysis.carbScore}</p>
-                        <p>成分: ${analysis.ingredients.map(ing => `${ing.name}: ${ing.protein || ing.fat || ing.carbs || ing.sugar || ing.salt}`).join(', ')}</p>
+                characters.forEach(character => {
+                    const characterCard = document.createElement('div');
+                    characterCard.className = 'character-mini-card';
+                    characterCard.innerHTML = `
+                        <h5>${character.name}</h5>
+                        <p>HP: ${character.hp}</p>
+                        <p>攻撃力: ${character.attack}</p>
+                        <p>防御力: ${character.defense}</p>
+                        <p>スピード: ${character.speed}</p>
+                        <p>成分: ${character.ingredients.map(ing => `${ing.name}: ${ing.protein || ing.fat || ing.carbs || ing.sugar || ing.salt}`).join(', ')}</p>
                     `;
-                    charactersList.appendChild(analysisCard);
+                    charactersList.appendChild(characterCard);
                 });
             }
         }
 
         function loadCharacters() {
-            console.log('栄養分析履歴読み込み開始');
+            console.log('バトル履歴読み込み開始');
             
             // フロントエンド完結型 - APIを使わない
-            const sampleAnalyses = [
+            const sampleCharacters = [
                 {
-                    name: "栄養バランス分析",
-                    totalCalories: 650,
-                    proteinScore: 120,
-                    fatScore: 65,
-                    carbScore: 45,
+                    name: "栄養成分戦士",
+                    hp: 120,
+                    attack: 65,
+                    defense: 45,
+                    speed: 30,
                     ingredients: [{"name": "タンパク質", "protein": 10}]
                 },
                 {
-                    name: "成分評価レポート", 
-                    totalCalories: 580,
-                    proteinScore: 110,
-                    fatScore: 55,
-                    carbScore: 40,
+                    name: "成分バトラー", 
+                    hp: 100,
+                    attack: 80,
+                    defense: 35,
+                    speed: 40,
                     ingredients: [{"name": "脂質", "fat": 15}]
                 },
                 {
-                    name: "栄養価計算結果",
-                    totalCalories: 720,
-                    proteinScore: 130,
-                    fatScore: 70,
-                    carbScore: 50,
+                    name: "栄養の勇者",
+                    hp: 150,
+                    attack: 50,
+                    defense: 60,
+                    speed: 25,
                     ingredients: [{"name": "炭水化物", "carbs": 20}]
                 }
             ];
             
-            displayCharacterList(sampleAnalyses);
-            console.log('サンプル栄養分析読み込み完了');
+            displayCharacterList(sampleCharacters);
+            console.log('サンプルキャラクター読み込み完了');
         }
 
         function loadSampleCharacters() {
-            console.log('サンプル栄養分析読み込み開始');
+            console.log('サンプルキャラクター読み込み開始');
             
-            const sampleAnalyses = [
+            const sampleCharacters = [
                 {
-                    name: "栄養バランス分析",
-                    totalCalories: 650,
-                    proteinScore: 120,
-                    fatScore: 65,
-                    carbScore: 45,
+                    name: "栄養成分戦士",
+                    hp: 120,
+                    attack: 65,
+                    defense: 45,
+                    speed: 30,
                     ingredients: [{"name": "タンパク質", "protein": 10}]
                 },
                 {
-                    name: "成分評価レポート", 
-                    totalCalories: 580,
-                    proteinScore: 110,
-                    fatScore: 55,
-                    carbScore: 40,
+                    name: "成分バトラー", 
+                    hp: 100,
+                    attack: 80,
+                    defense: 35,
+                    speed: 40,
                     ingredients: [{"name": "脂質", "fat": 15}]
                 },
                 {
-                    name: "栄養価計算結果",
-                    totalCalories: 720,
-                    proteinScore: 130,
-                    fatScore: 70,
-                    carbScore: 50,
+                    name: "栄養の勇者",
+                    hp: 150,
+                    attack: 50,
+                    defense: 60,
+                    speed: 25,
                     ingredients: [{"name": "炭水化物", "carbs": 20}]
                 },
                 {
-                    name: "健康度評価",
-                    totalCalories: 600,
-                    proteinScore: 115,
-                    fatScore: 60,
-                    carbScore: 42,
+                    name: "成分の守護者",
+                    hp: 110,
+                    attack: 70,
+                    defense: 50,
+                    speed: 35,
                     ingredients: [{"name": "糖質", "sugar": 8}]
                 },
                 {
-                    name: "栄養素分析",
-                    totalCalories: 680,
-                    proteinScore: 125,
-                    fatScore: 68,
-                    carbScore: 48,
+                    name: "栄養成分騎士",
+                    hp: 130,
+                    attack: 60,
+                    defense: 55,
+                    speed: 30,
                     ingredients: [{"name": "塩分", "salt": 2}]
                 }
             ];
             
-            displayCharacterList(sampleAnalyses);
-            console.log('サンプル栄養分析読み込み完了');
+            displayCharacterList(sampleCharacters);
+            console.log('サンプルキャラクター読み込み完了');
         }
 
         // PWA Install
