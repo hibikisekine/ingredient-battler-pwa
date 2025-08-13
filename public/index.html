@@ -20,11 +20,28 @@
     <link rel="apple-touch-icon" href="/static/icons/icon-152x152.png">
     <link rel="manifest" href="/manifest.json">
     
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNH23TK5BG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LNH23TK5BG');
+    </script>
+    
     <!-- A8.net アフィリエイト広告 -->
     <script type="text/javascript">
         // A8.net 広告クリック追跡
         function A8SalesClick() {
             console.log('🎯 A8.net 広告がクリックされました');
+            // Google Analytics イベント送信
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'ad_click', {
+                    'event_category': 'engagement',
+                    'event_label': 'a8net_ad'
+                });
+            }
             if (typeof window.A8SalesClick === 'function') {
                 window.A8SalesClick();
             }
@@ -1066,6 +1083,15 @@
             try {
                 displayCharacter(battleCharacter);
                 console.log('成分バトラー表示完了');
+                
+                // Google Analytics バトル開始イベント
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'battle_start', {
+                        'event_category': 'game',
+                        'event_label': 'manual_input'
+                    });
+                }
+                
                 alert('成分バトル開始！');
             } catch (error) {
                 console.error('成分バトラー表示エラー:', error);
@@ -1129,6 +1155,14 @@
                 document.querySelector('button[onclick="startCamera()"]').style.display = 'none';
                 document.querySelector('button[onclick="stopCamera()"]').style.display = 'inline-block';
                 document.querySelector('button[onclick="captureImage()"]').style.display = 'inline-block';
+                
+                // Google Analytics カメラ開始イベント
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'camera_start', {
+                        'event_category': 'feature',
+                        'event_label': 'ocr_camera'
+                    });
+                }
                 
             } catch (error) {
                 console.error('カメラアクセスエラー:', error);
@@ -1477,6 +1511,14 @@
             
             // 勝利時にリワード広告を表示
             if (result.winner === currentCharacter.name) {
+                // Google Analytics バトル勝利イベント
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'battle_victory', {
+                        'event_category': 'game',
+                        'event_label': 'player_win'
+                    });
+                }
+                
                 setTimeout(() => {
                     showRewardedAdOnVictory();
                 }, 1000);
@@ -1628,6 +1670,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             loadCharacters();
+            
+            // Google Analytics ページビュー送信
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'page_view', {
+                    'page_title': '栄養成分バトラー',
+                    'page_location': window.location.href
+                });
+            }
         });
 
         // A8.net リワード広告機能
