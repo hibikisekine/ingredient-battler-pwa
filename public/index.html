@@ -20,9 +20,16 @@
     <link rel="apple-touch-icon" href="/static/icons/icon-152x152.png">
     <link rel="manifest" href="/manifest.json">
     
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7310204683723531"
-     crossorigin="anonymous"></script>
+    <!-- A8.net アフィリエイト広告 -->
+    <script type="text/javascript">
+        // A8.net 広告クリック追跡
+        function A8SalesClick() {
+            console.log('🎯 A8.net 広告がクリックされました');
+            if (typeof window.A8SalesClick === 'function') {
+                window.A8SalesClick();
+            }
+        }
+    </script>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -329,10 +336,45 @@
             margin: 0 auto;
         }
 
+        /* A8.net 広告スタイル */
+        .a8-ad-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .a8-ad-title {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .a8-ad-image {
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .a8-ad-image:hover {
+            transform: scale(1.02);
+        }
+
         /* 広告レスポンシブ対応 */
         @media (max-width: 768px) {
             .ad-banner {
                 padding: 5px;
+            }
+            
+            .a8-ad-container {
+                padding: 10px;
+            }
+            
+            .a8-ad-title {
+                font-size: 14px;
             }
         }
 
@@ -846,17 +888,39 @@
             </div>
         </div>
 
-        <!-- AdSense広告 -->
-        <div class="ad-banner mt-4">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7310204683723531"
-                 data-ad-slot="6204992212"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+        <!-- A8.net アフィリエイト広告 - 栄養関連商品 -->
+        <div class="a8-ad-container mt-4">
+            <h5 class="a8-ad-title">🥗 栄養・健康関連おすすめ商品</h5>
+            <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" target="_blank" rel="nofollow" onclick="A8SalesClick()">
+                <img border="0" width="100%" height="250" alt="栄養・健康関連商品" src="https://www29.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001003000&mc=1" class="a8-ad-image" style="max-width: 300px;">
+            </a>
+            <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" alt="">
+        </div>
+
+        <!-- A8.net アフィリエイト広告 - 調理器具・食材 -->
+        <div class="a8-ad-container mt-4">
+            <h5 class="a8-ad-title">🍳 調理器具・食材おすすめ</h5>
+            <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+5ZMCH" target="_blank" rel="nofollow" onclick="A8SalesClick()">
+                <img border="0" width="100%" height="250" alt="調理器具・食材" src="https://www24.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001006000&mc=1" class="a8-ad-image" style="max-width: 300px;">
+            </a>
+            <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+5ZMCH" alt="">
+        </div>
+
+        <!-- A8.net アフィリエイト広告 - 健康食品 -->
+        <div class="a8-ad-container mt-4">
+            <h5 class="a8-ad-title">💊 健康食品・サプリメント</h5>
+            <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+62MDD" target="_blank" rel="nofollow" onclick="A8SalesClick()">
+                <img border="0" width="100%" height="250" alt="健康食品・サプリメント" src="https://www26.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001020000&mc=1" class="a8-ad-image" style="max-width: 300px;">
+            </a>
+            <img border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+62MDD" alt="">
+        </div>
+
+        <!-- A8.net ローテーション広告 -->
+        <div class="a8-ad-container mt-4">
+            <h5 class="a8-ad-title">🔄 おすすめ商品ローテーション</h5>
+            <div id="a8-rotation-ad" style="text-align: center; min-height: 250px; display: flex; align-items: center; justify-content: center;">
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">🔄 ローテーション広告読み込み中...</div>
+            </div>
         </div>
 
         <!-- フッター -->
@@ -894,6 +958,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Tesseract.js -->
     <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
+    <!-- A8.net ローテーション広告 -->
+    <script type="text/javascript" src="//rot9.a8.net/jsa/36b3a1613c4cd400dbdd1ce1d94a9e02/568628e0d993b1973adc718237da6e93.js"></script>
 
     <script>
         let currentCharacter = null;
@@ -1579,22 +1645,61 @@
             loadCharacters();
         });
 
-        // リワード広告機能（Web用）
+        // A8.net リワード広告機能
         function showRewardedAd() {
-            // Web用のリワード広告実装
-            if (typeof gtag !== 'undefined') {
-                // Google Analytics イベント送信
-                gtag('event', 'reward_ad_view', {
-                    'event_category': 'engagement',
-                    'event_label': 'battle_victory'
-                });
+            // A8.net リワード広告を表示
+            const rewardAdHtml = `
+                <div style="
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 10000;
+                    background: rgba(0, 0, 0, 0.9);
+                    padding: 20px;
+                    border-radius: 15px;
+                    text-align: center;
+                    max-width: 400px;
+                    width: 90%;
+                ">
+                    <h4 style="color: white; margin-bottom: 15px;">🎉 バトル勝利報酬！</h4>
+                    <p style="color: white; margin-bottom: 20px;">栄養関連商品をお得に購入できます</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" target="_blank" rel="nofollow" onclick="A8SalesClick()">
+                            <img border="0" width="100%" height="250" alt="栄養関連商品" src="https://www29.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001003000&mc=1" style="max-width: 300px; border-radius: 8px;">
+                        </a>
+                        <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" alt="">
+                    </div>
+                    
+                    <button onclick="closeRewardAd()" style="
+                        background: var(--gradient-success);
+                        border: none;
+                        border-radius: 25px;
+                        padding: 10px 20px;
+                        color: white;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">閉じる</button>
+                </div>
+            `;
+            
+            const rewardAdElement = document.createElement('div');
+            rewardAdElement.id = 'reward-ad-overlay';
+            rewardAdElement.innerHTML = rewardAdHtml;
+            document.body.appendChild(rewardAdElement);
+            
+            // 5秒後に自動で閉じる
+            setTimeout(() => {
+                closeRewardAd();
+            }, 10000);
+        }
+        
+        function closeRewardAd() {
+            const rewardAd = document.getElementById('reward-ad-overlay');
+            if (rewardAd) {
+                rewardAd.remove();
             }
-            
-            // 開発環境用のモック
-            alert('報酬を獲得しました！\n（実際のリワード広告はAdSenseで実装）');
-            
-            // ここでゲーム内報酬を付与
-            // 例：キャラクター強化、アイテム獲得など
         }
 
         // バトル勝利時にリワード広告を表示
