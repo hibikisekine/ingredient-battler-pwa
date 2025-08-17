@@ -31,11 +31,8 @@
     </script>
     
     <!-- 忍者アドマックス -->
-    <script type="text/javascript" src="https://admax.ninja.co.jp/js/ads.js"></script>
+    <script src="https://adm.shinobi.jp/s/16d450a51639b8436c61fd97b945eff0"></script>
     <script type="text/javascript">
-        // 忍者アドマックス設定
-        var admax_url = 'https://admax.ninja.co.jp/';
-        
         // 広告クリック追跡
         function NinjaAdClick() {
             console.log('🎯 忍者アドマックス広告がクリックされました');
@@ -366,12 +363,12 @@
             min-height: 100px;
         }
 
-        .ninja-ad-container iframe {
+        .ninja-ad-container .admax {
             border-radius: 8px;
             transition: transform 0.3s ease;
         }
 
-        .ninja-ad-container iframe:hover {
+        .ninja-ad-container .admax:hover {
             transform: scale(1.02);
         }
 
@@ -385,7 +382,7 @@
                 padding: 5px;
             }
             
-            .ninja-ad-container iframe {
+            .ninja-ad-container .admax {
                 max-width: 100% !important;
                 height: auto !important;
             }
@@ -903,38 +900,22 @@
 
         <!-- 忍者アドマックス - ヘッダー広告 -->
         <div class="ninja-ad-container mt-4">
-            <script type="text/javascript">
-                var admax_tag = 'header_tag';
-                var admax_width = 728;
-                var admax_height = 90;
-            </script>
+            <div class="admax" data-admax-id="header"></div>
         </div>
 
         <!-- 忍者アドマックス - コンテンツ内広告1 -->
         <div class="ninja-ad-container mt-4">
-            <script type="text/javascript">
-                var admax_tag = 'content_tag1';
-                var admax_width = 300;
-                var admax_height = 250;
-            </script>
+            <div class="admax" data-admax-id="content1"></div>
         </div>
 
         <!-- 忍者アドマックス - コンテンツ内広告2 -->
         <div class="ninja-ad-container mt-4">
-            <script type="text/javascript">
-                var admax_tag = 'content_tag2';
-                var admax_width = 300;
-                var admax_height = 250;
-            </script>
+            <div class="admax" data-admax-id="content2"></div>
         </div>
 
         <!-- 忍者アドマックス - フッター広告 -->
         <div class="ninja-ad-container mt-4">
-            <script type="text/javascript">
-                var admax_tag = 'footer_tag';
-                var admax_width = 728;
-                var admax_height = 90;
-            </script>
+            <div class="admax" data-admax-id="footer"></div>
         </div>
 
         <!-- フッター -->
@@ -1713,7 +1694,7 @@
                     
                     <div style="margin-bottom: 20px;">
                         <div class="ninja-ad-container" id="reward-ad-container">
-                            <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">🎉 リワード広告読み込み中...</div>
+                            <div class="admax" data-admax-id="reward"></div>
                         </div>
                     </div>
                     
