@@ -30,20 +30,21 @@
       gtag('config', 'G-LNH23TK5BG');
     </script>
     
-    <!-- A8.net アフィリエイト広告 -->
+    <!-- 忍者アドマックス -->
+    <script type="text/javascript" src="https://admax.ninja.co.jp/js/ads.js"></script>
     <script type="text/javascript">
-        // A8.net 広告クリック追跡
-        function A8SalesClick() {
-            console.log('🎯 A8.net 広告がクリックされました');
+        // 忍者アドマックス設定
+        var admax_url = 'https://admax.ninja.co.jp/';
+        
+        // 広告クリック追跡
+        function NinjaAdClick() {
+            console.log('🎯 忍者アドマックス広告がクリックされました');
             // Google Analytics イベント送信
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'ad_click', {
                     'event_category': 'engagement',
-                    'event_label': 'a8net_ad'
+                    'event_label': 'ninja_admax'
                 });
-            }
-            if (typeof window.A8SalesClick === 'function') {
-                window.A8SalesClick();
             }
         }
     </script>
@@ -353,8 +354,8 @@
             margin: 0 auto;
         }
 
-        /* A8.net 広告スタイル */
-        .a8-ad-container {
+        /* 忍者アドマックス 広告スタイル */
+        .ninja-ad-container {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 10px;
@@ -362,14 +363,15 @@
             text-align: center;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 100px;
         }
 
-        .a8-ad-image {
+        .ninja-ad-container iframe {
             border-radius: 8px;
             transition: transform 0.3s ease;
         }
 
-        .a8-ad-image:hover {
+        .ninja-ad-container iframe:hover {
             transform: scale(1.02);
         }
 
@@ -379,8 +381,13 @@
                 padding: 5px;
             }
             
-            .a8-ad-container {
+            .ninja-ad-container {
                 padding: 5px;
+            }
+            
+            .ninja-ad-container iframe {
+                max-width: 100% !important;
+                height: auto !important;
             }
         }
 
@@ -894,35 +901,40 @@
             </div>
         </div>
 
-        <!-- A8.net アフィリエイト広告 - 栄養関連商品 -->
-        <div class="a8-ad-container mt-4">
-            <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" target="_blank" rel="nofollow" onclick="A8SalesClick()">
-                <img border="0" width="100%" height="250" alt="栄養・健康関連商品" src="https://www29.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001003000&mc=1" class="a8-ad-image" style="max-width: 300px;">
-            </a>
-            <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" alt="">
+        <!-- 忍者アドマックス - ヘッダー広告 -->
+        <div class="ninja-ad-container mt-4">
+            <script type="text/javascript">
+                var admax_tag = 'header_tag';
+                var admax_width = 728;
+                var admax_height = 90;
+            </script>
         </div>
 
-        <!-- A8.net アフィリエイト広告 - 調理器具・食材 -->
-        <div class="a8-ad-container mt-4">
-            <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+5ZMCH" target="_blank" rel="nofollow" onclick="A8SalesClick()">
-                <img border="0" width="100%" height="250" alt="調理器具・食材" src="https://www24.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001006000&mc=1" class="a8-ad-image" style="max-width: 300px;">
-            </a>
-            <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+5ZMCH" alt="">
+        <!-- 忍者アドマックス - コンテンツ内広告1 -->
+        <div class="ninja-ad-container mt-4">
+            <script type="text/javascript">
+                var admax_tag = 'content_tag1';
+                var admax_width = 300;
+                var admax_height = 250;
+            </script>
         </div>
 
-        <!-- A8.net アフィリエイト広告 - 健康食品 -->
-        <div class="a8-ad-container mt-4">
-            <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+62MDD" target="_blank" rel="nofollow" onclick="A8SalesClick()">
-                <img border="0" width="100%" height="250" alt="健康食品・サプリメント" src="https://www26.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001020000&mc=1" class="a8-ad-image" style="max-width: 300px;">
-            </a>
-            <img border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+62MDD" alt="">
+        <!-- 忍者アドマックス - コンテンツ内広告2 -->
+        <div class="ninja-ad-container mt-4">
+            <script type="text/javascript">
+                var admax_tag = 'content_tag2';
+                var admax_width = 300;
+                var admax_height = 250;
+            </script>
         </div>
 
-        <!-- A8.net ローテーション広告 -->
-        <div class="a8-ad-container mt-4">
-            <div id="a8-rotation-ad" style="text-align: center; min-height: 250px; display: flex; align-items: center; justify-content: center;">
-                <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">🔄 ローテーション広告読み込み中...</div>
-            </div>
+        <!-- 忍者アドマックス - フッター広告 -->
+        <div class="ninja-ad-container mt-4">
+            <script type="text/javascript">
+                var admax_tag = 'footer_tag';
+                var admax_width = 728;
+                var admax_height = 90;
+            </script>
         </div>
 
         <!-- フッター -->
@@ -960,8 +972,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Tesseract.js -->
     <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
-    <!-- A8.net ローテーション広告 -->
-    <script type="text/javascript" src="//rot9.a8.net/jsa/36b3a1613c4cd400dbdd1ce1d94a9e02/568628e0d993b1973adc718237da6e93.js"></script>
+
 
     <script>
         let currentCharacter = null;
@@ -1680,9 +1691,9 @@
             }
         });
 
-        // A8.net リワード広告機能
+        // 忍者アドマックス リワード広告機能
         function showRewardedAd() {
-            // A8.net リワード広告を表示
+            // 忍者アドマックス リワード広告を表示
             const rewardAdHtml = `
                 <div style="
                     position: fixed;
@@ -1701,10 +1712,9 @@
                     <p style="color: white; margin-bottom: 20px;">栄養関連商品をお得に購入できます</p>
                     
                     <div style="margin-bottom: 20px;">
-                        <a href="https://px.a8.net/svt/ejp?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" target="_blank" rel="nofollow" onclick="A8SalesClick()">
-                            <img border="0" width="100%" height="250" alt="栄養関連商品" src="https://www29.a8.net/svt/bgt?aid=250813543322&wid=003&eno=01&mid=s00000026765001003000&mc=1" style="max-width: 300px; border-radius: 8px;">
-                        </a>
-                        <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45BSYV+5BPN42+5QIQ+5YZ75" alt="">
+                        <div class="ninja-ad-container" id="reward-ad-container">
+                            <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">🎉 リワード広告読み込み中...</div>
+                        </div>
                     </div>
                     
                     <button onclick="closeRewardAd()" style="
